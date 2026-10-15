@@ -63,151 +63,24 @@
         </div>
         <div class="system-drawing">
           <div class="drawing-label mono">
-            <span>FIG 01 / LOGICAL SYSTEM</span><span>us-east-2</span>
+            <span>FIG 01 / AWS ARCHITECTURE</span><span>us-east-2</span>
           </div>
-          <svg
+          <button
+            type="button"
             class="hero-map"
-            viewBox="0 0 680 540"
-            role="img"
-            aria-labelledby="hero-map-title hero-map-desc"
+            data-image="../architecture/aws-architecture.svg"
+            data-kind="diagram"
+            data-title="System topology"
+            aria-label="Open the AWS architecture diagram at full size"
           >
-            <title id="hero-map-title">A drawn map of the live AWS agent</title>
-            <desc id="hero-map-desc">
-              The browser authenticates with Cognito and submits to an HTTP API
-              and Lambda. SQS invokes a worker, which calls Bedrock and safe
-              tools and records results in DynamoDB.
-            </desc>
-            <defs>
-              <pattern
-                id="grid"
-                width="28"
-                height="28"
-                patternUnits="userSpaceOnUse"
-              >
-                <circle cx="1" cy="1" r="1" fill="#294052" />
-              </pattern>
-              <marker
-                id="arrow"
-                markerWidth="7"
-                markerHeight="7"
-                refX="6"
-                refY="3.5"
-                orient="auto"
-              >
-                <path d="M0 0L7 3.5L0 7" fill="#62cfc4" />
-              </marker>
-            </defs>
-            <rect width="680" height="540" fill="url(#grid)" />
-            <path
-              class="map-path"
-              d="M160 270H250M340 270H425M515 270H590V150H515M470 315V410H340M295 410H110V315M295 365V315"
-              fill="none"
-              stroke="#62cfc4"
-              stroke-width="2"
-              marker-end="url(#arrow)"
+            <img
+              src="../architecture/aws-architecture.svg"
+              alt="AWS architecture: users load the React app from Amplify Hosting and sign in with Cognito; API Gateway validates the JWT for the API Lambda, which writes DynamoDB and enqueues to SQS; SQS triggers the worker Lambda, which calls Bedrock and in-process tools, with a DLQ, IAM roles and CloudWatch logs."
             />
-            <path
-              d="M110 225V110H250M340 110H470V225"
-              fill="none"
-              stroke="#8094b1"
-              stroke-dasharray="6 6"
-              stroke-width="1.5"
-            />
-            <rect
-              x="45"
-              y="225"
-              width="130"
-              height="90"
-              rx="13"
-              fill="#142b3b"
-              stroke="#405d73"
-            />
-            <rect
-              x="250"
-              y="225"
-              width="100"
-              height="90"
-              rx="13"
-              fill="#152d3d"
-              stroke="#62cfc4"
-            />
-            <rect
-              x="425"
-              y="225"
-              width="105"
-              height="90"
-              rx="13"
-              fill="#29312c"
-              stroke="#f8a963"
-            />
-            <rect
-              x="425"
-              y="105"
-              width="105"
-              height="90"
-              rx="13"
-              fill="#2a2337"
-              stroke="#bca4ed"
-            />
-            <rect
-              x="245"
-              y="365"
-              width="110"
-              height="90"
-              rx="13"
-              fill="#19283f"
-              stroke="#80a8e8"
-            />
-            <rect
-              x="245"
-              y="75"
-              width="105"
-              height="70"
-              rx="13"
-              fill="#1c2938"
-              stroke="#8094b1"
-            />
-            <g fill="none" stroke="#b9d9e5" stroke-width="2">
-              <rect x="85" y="243" width="48" height="28" rx="3" />
-              <path
-                d="M109 271v9m-15 0h30M282 245h34m-34 11h34m-34 11h20M451 247h18v18h-18zm23 10h18v18h-18zM288 389c-24 0-24 12 0 12s24-12 0-12zm-18 6v20c0 12 36 12 36 0v-20M459 132l-10 12 20 13 17-20 16 10M287 92l-10 5v13c0 9 10 14 10 14s10-5 10-14V97z"
-              />
-            </g>
-            <g
-              fill="#e5f2f6"
-              font-family="system-ui,sans-serif"
-              font-size="13"
-              text-anchor="middle"
-            >
-              <text x="110" y="300">Browser</text>
-              <text x="300" y="300">HTTP API</text>
-              <text x="478" y="300">SQS / worker</text>
-              <text x="478" y="180">Bedrock</text>
-              <text x="300" y="442">DynamoDB</text>
-              <text x="300" y="137">Cognito</text>
-            </g>
-            <g fill="#7898ad" font-family="monospace" font-size="11">
-              <text x="189" y="250">JWT</text>
-              <text x="367" y="250">202</text>
-              <text x="550" y="210">Converse</text>
-              <text x="353" y="400">persist</text>
-              <text x="72" y="345">poll 2s</text>
-            </g>
-            <circle cx="470" cy="335" r="4" fill="#f8a963" />
-            <text
-              x="478"
-              y="500"
-              text-anchor="middle"
-              fill="#a2b5c5"
-              font-size="12"
-              font-family="monospace"
-            >
-              calculator + curated search
-            </text>
-          </svg>
+          </button>
           <div class="drawing-footer">
-            <span>Two tools. One bounded controller.</span
-            ><span class="pulse-label">ACTION → OBSERVATION</span>
+            <span>Official AWS icons · editable draw.io source</span
+            ><span class="pulse-label">CLICK TO ENLARGE</span>
           </div>
         </div>
       </section>

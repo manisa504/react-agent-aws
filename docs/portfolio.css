@@ -236,6 +236,18 @@ header {
 .hero-map {
   width: 100%;
   display: block;
+  padding: 10px;
+  border: 0;
+  background: #f5f5f5;
+  cursor: zoom-in;
+}
+.hero-map img {
+  width: 100%;
+  display: block;
+}
+.hero-map:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -4px;
 }
 .drawing-footer {
   border: 0;
@@ -247,15 +259,6 @@ header {
   font:
     8px ui-monospace,
     monospace;
-}
-.map-path {
-  stroke-dasharray: 6 4;
-  animation: trace 20s linear infinite;
-}
-@keyframes trace {
-  to {
-    stroke-dashoffset: -120;
-  }
 }
 .stack-band {
   border-top: 1px solid var(--line);

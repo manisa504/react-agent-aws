@@ -11,7 +11,8 @@ for (const button of document.querySelectorAll(
       ? new URL(image, document.baseURI).href
       : button.closest("article").querySelector("img").src;
     dialogImage.alt = button.dataset.title;
-    dialogImage.dataset.kind = image ? "screenshot" : "diagram";
+    dialogImage.dataset.kind =
+      button.dataset.kind ?? (image ? "screenshot" : "diagram");
     title.textContent = button.dataset.title;
     dialog.showModal();
   });
