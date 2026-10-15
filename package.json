@@ -1,0 +1,8 @@
+{
+  "name": "react-agent-workbench-project",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "docs:build": "python3 scripts/build_docs.py"
+  }
+}

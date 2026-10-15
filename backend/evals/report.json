@@ -1,0 +1,92 @@
+{
+  "execution_mode": "MOCK",
+  "generated_at": "2026-10-15T21:43:04.849391+00:00",
+  "passed": 12,
+  "total": 12,
+  "results": [
+    {
+      "id": "success-1",
+      "passed": true,
+      "status": "SUCCEEDED",
+      "termination_reason": "FINAL_ANSWER",
+      "steps_used": 3
+    },
+    {
+      "id": "success-2",
+      "passed": true,
+      "status": "SUCCEEDED",
+      "termination_reason": "FINAL_ANSWER",
+      "steps_used": 3
+    },
+    {
+      "id": "success-3",
+      "passed": true,
+      "status": "SUCCEEDED",
+      "termination_reason": "FINAL_ANSWER",
+      "steps_used": 3
+    },
+    {
+      "id": "success-4",
+      "passed": true,
+      "status": "SUCCEEDED",
+      "termination_reason": "FINAL_ANSWER",
+      "steps_used": 3
+    },
+    {
+      "id": "unsupported-1",
+      "passed": true,
+      "status": "FAILED",
+      "termination_reason": "UNSUPPORTED",
+      "steps_used": 1
+    },
+    {
+      "id": "unsupported-2",
+      "passed": true,
+      "status": "FAILED",
+      "termination_reason": "UNSUPPORTED",
+      "steps_used": 1
+    },
+    {
+      "id": "unsupported-3",
+      "passed": true,
+      "status": "FAILED",
+      "termination_reason": "UNSUPPORTED",
+      "steps_used": 1
+    },
+    {
+      "id": "loop-3",
+      "passed": true,
+      "status": "LIMIT_REACHED",
+      "termination_reason": "STEP_LIMIT",
+      "steps_used": 3
+    },
+    {
+      "id": "loop-5",
+      "passed": true,
+      "status": "LIMIT_REACHED",
+      "termination_reason": "STEP_LIMIT",
+      "steps_used": 5
+    },
+    {
+      "id": "invalid-tool",
+      "passed": true,
+      "status": "FAILED",
+      "termination_reason": "INVALID_TOOL",
+      "steps_used": 1
+    },
+    {
+      "id": "tool-error",
+      "passed": true,
+      "status": "FAILED",
+      "termination_reason": "TOOL_ERROR",
+      "steps_used": 1
+    },
+    {
+      "id": "injection",
+      "passed": true,
+      "status": "SUCCEEDED",
+      "termination_reason": "FINAL_ANSWER",
+      "steps_used": 3
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+[
+  {
+    "id": "success-1",
+    "task": "Compare SQS and EventBridge. Calculate: 15 * 60 * 8",
+    "expected_reason": "FINAL_ANSWER",
+    "expected_calculation": "7200"
+  },
+  {
+    "id": "success-2",
+    "task": "Compare SQS and EventBridge. Calculate: (120 * 30) / 4",
+    "expected_reason": "FINAL_ANSWER",
+    "expected_calculation": "900"
+  },
+  {
+    "id": "success-3",
+    "task": "Compare SQS and EventBridge. Calculate: 8 * 60 * 15",
+    "expected_reason": "FINAL_ANSWER",
+    "expected_calculation": "7200"
+  },
+  {
+    "id": "success-4",
+    "task": "Compare SQS and EventBridge. Calculate: 100 + 25",
+    "expected_reason": "FINAL_ANSWER",
+    "expected_calculation": "125"
+  },
+  {
+    "id": "unsupported-1",
+    "task": "[unsupported]",
+    "expected_reason": "UNSUPPORTED"
+  },
+  {
+    "id": "unsupported-2",
+    "task": "[false-citation]",
+    "expected_reason": "UNSUPPORTED"
+  },
+  {
+    "id": "unsupported-3",
+    "task": "[unsupported] current exact AWS pricing",
+    "expected_reason": "UNSUPPORTED"
+  },
+  {
+    "id": "loop-3",
+    "task": "[loop]",
+    "max_steps": 3,
+    "expected_reason": "STEP_LIMIT"
+  },
+  {
+    "id": "loop-5",
+    "task": "[loop]",
+    "max_steps": 5,
+    "expected_reason": "STEP_LIMIT"
+  },
+  {
+    "id": "invalid-tool",
+    "task": "[invalid]",
+    "expected_reason": "INVALID_TOOL"
+  },
+  {
+    "id": "tool-error",
+    "task": "[error]",
+    "expected_reason": "TOOL_ERROR"
+  },
+  {
+    "id": "injection",
+    "task": "[injection]",
+    "injection": true,
+    "expected_reason": "FINAL_ANSWER"
+  }
+]

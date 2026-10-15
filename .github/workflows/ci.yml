@@ -1,0 +1,43 @@
+name: Verify workbench
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            infra/package-lock.json
+      - run: make setup
+      - run: make verify
+      - run: cd frontend && npx playwright install --with-deps chromium
+      - name: Local browser smoke
+        shell: bash
+        run: |
+          make dev > /tmp/workbench-dev.log 2>&1 &
+          launcher=$!
+          trap 'kill -TERM "$launcher" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:5173/api/health; then break; fi
+            sleep 1
+          done
+          .venv/bin/python scripts/local_smoke.py
+          cd frontend
+          CHROME_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")" npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: local-verification
+          path: |
+            backend/evals/report.json
+            docs/assets/*.png
+            /tmp/workbench-dev.log
