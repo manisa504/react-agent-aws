@@ -102,7 +102,8 @@ function choose(name) {
   $("#task").value = scenarios[name].task;
   $("#scenario-description").textContent = scenarios[name].description;
   $("#calculation-inputs").hidden = name !== "calculation";
-  count();
+  if (name === "calculation") updateCalculation();
+  else count();
 }
 function count() {
   $("#char-count").textContent =

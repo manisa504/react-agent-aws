@@ -129,6 +129,11 @@ try {
     .click();
   await expect(page.getByRole("status")).toHaveText("Succeeded");
   await expect(page.locator("#answer")).toContainText("360 images");
+  await page.getByRole("button", { name: "AWS decision", exact: true }).click();
+  await page.getByRole("button", { name: "Calculation", exact: true }).click();
+  await expect(page.getByLabel("Planning task")).toHaveValue(
+    "Calculate how many images arrive in 2 minutes at 3 images per second.",
+  );
   await page.getByLabel("Minutes", { exact: true }).fill("0");
   await page
     .getByRole("button", { name: "Run scenario", exact: false })
