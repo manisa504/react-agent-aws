@@ -1,5 +1,7 @@
 # ReAct Agent Workbench
 
+[Portfolio page](https://manisa504.github.io/react-agent-aws/) · [Interactive static demo](https://manisa504.github.io/react-agent-aws/demo.html)
+
 [Source repository](https://github.com/manisa504/react-agent-aws) · [Automated checks](https://github.com/manisa504/react-agent-aws/actions/workflows/ci.yml)
 
 Tool-calling assistants can repeat actions or give answers without evidence. Manisha's workbench demonstrates an agent with two safe tools, an inspectable action trace, and an enforced stopping point.
@@ -11,6 +13,31 @@ Tool-calling assistants can repeat actions or give answers without evidence. Man
 ![Actual hosted Bedrock workbench screenshot](docs/assets/workbench-cloud.png)
 
 *Actual Amplify application and Bedrock result, captured with a temporary test account. [Local MOCK screenshot](docs/assets/workbench-local.png).*
+
+## Explore without an account
+
+The [portfolio page](https://manisa504.github.io/react-agent-aws/) explains the system and shows genuine app screenshots. The [static playground](https://manisa504.github.io/react-agent-aws/demo.html) lets hiring managers try six scripted scenarios without signing in or invoking AWS. It includes adjustable arithmetic, inspectable observations/citations, 3–8 step limits, reset during execution, and explicit error outcomes. All demo results are labeled MOCK; this page sends no runtime API requests.
+
+![Actual static playground showing the scripted two-tool scenario](docs/assets/static-demo.png)
+
+*Browser-only mockup for visitors; scripted results, no AWS or model invocation.*
+
+<details>
+<summary>More screenshots from the real application</summary>
+
+![Public introduction on the deployed Amplify app](docs/assets/workbench-landing.png)
+
+*Fresh capture of the deployed public introduction, October 15, 2026.*
+
+![Actual local MOCK application stopping at the configured step limit](docs/assets/workbench-bounded.png)
+
+*Fresh local MOCK execution: a repeated search terminates at five steps.*
+
+![Owner-supplied screenshot of the signed-in cloud workbench](docs/assets/workbench-owner.png)
+
+*Manisha's saved screenshot of the signed-in workspace, October 15, 2026.*
+
+</details>
 
 ## Run locally
 
@@ -54,7 +81,7 @@ With `make dev` running: `.venv/bin/python scripts/local_smoke.py` tests the API
 
 ![AWS architecture](architecture/aws-architecture.svg)
 
-[Editable draw.io source](architecture/aws-architecture.drawio) · [Architecture guide](architecture/aws-architecture.md) · [Presentation site](docs/index.html)
+[Editable draw.io source — three pages](architecture/aws-architecture.drawio) · [Run lifecycle](architecture/aws-run-lifecycle.svg) · [Execution modes](architecture/execution-modes.svg) · [Architecture guide](architecture/aws-architecture.md) · [Presentation site](docs/index.html)
 
 ```mermaid
 flowchart LR
@@ -90,5 +117,6 @@ The DynamoDB table is retained on stack destruction and needs a conscious separa
 - [UI component specification](docs/UI_COMPONENT_SPEC.md)
 - [Local deployment](docs/local-deploy.md), [AWS deployment](docs/aws-deploy.md), [teardown](docs/aws-deploy-teardown.md)
 - [Demo script](docs/demo-script.md), [verification](docs/verification.md), [architecture](docs/architecture.md)
+- [Portfolio publishing](docs/portfolio-publishing.md) and [asset provenance](docs/assets/README.md)
 
 No multi-agent framework, browsing, arbitrary execution, vector database, or external website API is included. Deterministic tests establish engineering behavior, not complete hallucination or prompt-injection prevention. Any future Expial integration requires official documentation and server-side secrets.

@@ -9,10 +9,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: "24"
           cache: npm
           cache-dependency-path: |
             frontend/package-lock.json
@@ -33,6 +33,17 @@ jobs:
           .venv/bin/python scripts/local_smoke.py
           cd frontend
           CHROME_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")" npm run test:e2e
+      - name: Static portfolio and playground browser checks
+        shell: bash
+        run: |
+          python -m http.server 8080 --bind 127.0.0.1 --directory docs/dist > /tmp/workbench-docs.log 2>&1 &
+          docs_server=$!
+          trap 'kill -TERM "$docs_server" 2>/dev/null || true' EXIT
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:8080/ > /dev/null; then break; fi
+            sleep 1
+          done
+          CHROME_PATH="$(cd frontend && node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")" node scripts/verify_portfolio.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

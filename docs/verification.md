@@ -64,3 +64,24 @@ The first live run executed both tools but failed strict final JSON parsing. The
 A full local verification attempt collided with a concurrently running CDK deployment's output-directory lock. It was rerun sequentially after deployment and passed. The current local resource snapshot is `.build/aws-resource-inventory.json`; stack outputs and diagnostic logs stay ignored by Git. Teardown remains a separate destructive action requiring explicit owner approval; none was performed.
 
 After the final hosting rebuild, a fresh HTTP check exposed a 301-to-404 response from the original 404 fallback on `/app`. Hosting was corrected to use the documented extension-excluding 200 SPA rewrite, saved in `amplify-rewrites.json`. Direct navigation, static assets and browser refresh were checked again after the correction.
+
+## Portfolio and static playground verification
+
+On October 15, 2026, the portfolio was rebuilt as a two-page static site. A fresh screenshot was captured from the live public Amplify introduction, and another from a real local MOCK run stopping at five steps. Manisha's clean signed-in screenshot is included with provenance. Existing live Bedrock evidence remains labeled separately from the static demonstration.
+
+The draw.io source now contains three pages (AWS topology, cloud run lifecycle, execution modes), exported using the installed draw.io CLI and visually reviewed. The guides distinguish concurrent polling from worker processing and document the retained table and deferred crashed-run recovery.
+
+Executed browser checks passed at both the local site root and the `/react-agent-aws/` project subpath:
+
+- Portfolio screenshots/diagram loaded; dialog open/close worked; no missing assets or browser errors.
+- Both pages fit a 320px viewport; desktop screenshots were also captured.
+- Six scripted scenarios produced the expected statuses, reasons and event counts.
+- Repeated searches stopped at both three-step and eight-step limits.
+- Numeric inputs produced the expected 360-image result and rejected out-of-range values.
+- Task markup remained inert, empty tasks could not start, and resetting a RUNNING run prevented later events from appearing.
+- After the demo's initial asset load, all network requests were blocked and every scenario still worked; no attempted runtime requests were recorded.
+- `make docs-build` validated local links and parsed all three SVG exports and the multipage draw.io XML. JavaScript syntax and Python lint checks passed.
+
+The new credential supplied for Higgsfield authenticated successfully; one conceptual illustration was generated through Recraft V4.1 and downloaded. Earlier incomplete-credential attempts returned 401. No credentials are saved in the source or bundled for visitors. Artwork is explicitly distinguished from app screenshots and architecture diagrams; see [asset provenance](assets/README.md).
+
+GitHub Pages is enabled with HTTPS and the custom publishing workflow. See [publishing instructions](portfolio-publishing.md) and the [Pages workflow runs](https://github.com/manisa504/react-agent-aws/actions/workflows/pages.yml) for deployment status. This static publication is independent of the live Amplify application.

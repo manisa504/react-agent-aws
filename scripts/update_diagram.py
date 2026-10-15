@@ -6,6 +6,215 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def append_detail_pages(mx):
+    def page(name, title, subtitle):
+        diagram = ET.SubElement(
+            mx, "diagram", id=name.lower().replace(" ", "-"), name=name
+        )
+        graph = ET.SubElement(
+            diagram,
+            "mxGraphModel",
+            dx="2800",
+            dy="1600",
+            grid="1",
+            gridSize="10",
+            page="1",
+            pageWidth="2400",
+            pageHeight="1400",
+        )
+        root = ET.SubElement(graph, "root")
+        ET.SubElement(root, "mxCell", id="0")
+        ET.SubElement(root, "mxCell", id="1", parent="0")
+
+        def box(id, text, x, y, w, h, style=""):
+            cell = ET.SubElement(
+                root,
+                "mxCell",
+                id=id,
+                value=text,
+                vertex="1",
+                parent="1",
+                style="rounded=1;whiteSpace=wrap;html=1;fontSize=23;spacing=24;fillColor=#FFFFFF;strokeColor=#D6D1E5;fontColor=#252134;"
+                + style,
+            )
+            ET.SubElement(
+                cell,
+                "mxGeometry",
+                x=str(x),
+                y=str(y),
+                width=str(w),
+                height=str(h),
+                attrib={"as": "geometry"},
+            )
+
+        def link(id, source, target, dashed=False):
+            cell = ET.SubElement(
+                root,
+                "mxCell",
+                id=id,
+                edge="1",
+                parent="1",
+                source=source,
+                target=target,
+                style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6955A4;strokeWidth=3;endArrow=block;endFill=1;"
+                + ("dashed=1;" if dashed else ""),
+            )
+            ET.SubElement(cell, "mxGeometry", relative="1", attrib={"as": "geometry"})
+
+        box(
+            "background",
+            "",
+            0,
+            0,
+            2400,
+            1400,
+            "rounded=0;fillColor=#F5F5F5;strokeColor=none;",
+        )
+        box(
+            "title",
+            f"<b>{title}</b><br>Manisha | 2026-10-15 | {subtitle}",
+            60,
+            40,
+            2200,
+            120,
+            "fillColor=none;strokeColor=none;align=left;fontSize=31;",
+        )
+        return box, link
+
+    box, link = page(
+        "Run lifecycle",
+        "From sign-in to a cited answer",
+        "Actual cloud request and worker lifecycle · us-east-2",
+    )
+    entries = [
+        (
+            "signin",
+            "<b>1 · Sign in</b><br><br>Amplify Auth uses Cognito SRP.<br>Access token is held by the client.",
+            80,
+            260,
+        ),
+        (
+            "jwt",
+            "<b>2 · Authorize</b><br><br>HTTP API validates JWT issuer,<br>audience and required scope.",
+            650,
+            260,
+        ),
+        (
+            "submit",
+            "<b>3 · Submit</b><br><br>POST /runs validates ≤ 2,000 chars<br>and 3–8 steps. Persist QUEUED META.",
+            1220,
+            260,
+        ),
+        (
+            "enqueue",
+            "<b>4 · Enqueue</b><br><br>Send run_id to SQS.<br>Return 202 + run_id immediately.",
+            1790,
+            260,
+        ),
+        (
+            "claim",
+            "<b>5 · Claim</b><br><br>Worker conditionally claims<br>QUEUED → RUNNING. Skip duplicates.",
+            1790,
+            660,
+        ),
+        (
+            "loop",
+            "<b>6 · Decide / validate / act</b><br><br>Bedrock Converse → validate →<br>safe tool → ordered STEP. Repeat.",
+            1220,
+            660,
+        ),
+        (
+            "finish",
+            "<b>7 · Finish</b><br><br>Validate citation IDs. Persist final<br>status, reason and actual usage.",
+            650,
+            660,
+        ),
+        (
+            "poll",
+            "<b>8 · Poll / display</b><br><br>GET metadata + steps every 2s.<br>Owner check on each read; stop at terminal.",
+            80,
+            660,
+        ),
+    ]
+    for id, text, x, y in entries:
+        box(id, text, x, y, 490, 240)
+    for index, (a, b) in enumerate(zip(entries, entries[1:])):
+        link(f"flow-{index}", a[0], b[0], index in {3, 6})
+    box(
+        "polling-note",
+        "After HTTP 202, the browser polls concurrently with worker steps 5–7; it does not wait for completion to begin polling.",
+        300,
+        535,
+        1800,
+        70,
+        "fillColor=none;strokeColor=none;fontSize=23;fontColor=#6955A4;",
+    )
+    box(
+        "states",
+        "<b>Terminal states</b><br>SUCCEEDED / FINAL_ANSWER<br>LIMIT_REACHED / STEP_LIMIT<br>FAILED / UNSUPPORTED, MODEL_ERROR, TOOL_ERROR, TIMEOUT, INVALID_TOOL",
+        80,
+        1040,
+        1060,
+        250,
+        "align=left;fontSize=22;",
+    )
+    box(
+        "bounds",
+        "<b>Operational bounds</b><br>Worker: 180s; controller: ≤150s; maxTokens: 1,000 per model request.<br>Native tool batches execute sequentially, one step each.<br>Enqueue failure: 503 + saved failure. Infrastructure retries: DLQ after five receives.<br>A worker crash after claim can strand RUNNING; automatic recovery is deferred.",
+        1220,
+        1040,
+        1060,
+        250,
+        "align=left;fontSize=22;",
+    )
+    box, link = page(
+        "Execution modes",
+        "Three experiences. Explicit boundaries.",
+        "The portfolio demo is independent of the authenticated AWS application",
+    )
+    modes = [
+        (
+            "static",
+            "<b>STATIC PLAYGROUND</b><br>GitHub Pages · docs/demo.html",
+            "Browser loads HTML / CSS / JS",
+            "Six scripted scenarios<br>Browser-local arithmetic and events",
+            "No login, API, model or database<br>Reset clears the displayed run",
+            260,
+        ),
+        (
+            "local",
+            "<b>LOCAL APPLICATION</b><br>make dev / make preview",
+            "Vite 127.0.0.1:5173<br>/api proxy → FastAPI :8000",
+            "Fixed demo identity → memory repo<br>Background task → same controller",
+            "FakeModel + real safe tools<br>API restart clears runs",
+            620,
+        ),
+        (
+            "cloud",
+            "<b>LIVE AWS APPLICATION</b><br>Amplify · us-east-2",
+            "Cognito → HTTP API JWT<br>API Lambda → DynamoDB / SQS",
+            "SQS → claimed worker →<br>Bedrock + real safe tools",
+            "Owned META + ordered STEP<br>7-day TTL; table retained on destroy",
+            980,
+        ),
+    ]
+    for id, title, start, middle, end, y in modes:
+        box(
+            id + "-label",
+            title,
+            70,
+            y - 25,
+            520,
+            230,
+            "fillColor=#EAE5F5;strokeColor=none;align=left;",
+        )
+        box(id + "-start", start, 650, y, 470, 180)
+        box(id + "-middle", middle, 1240, y, 470, 180)
+        box(id + "-end", end, 1830, y, 470, 180)
+        link(id + "-flow-a", id + "-start", id + "-middle")
+        link(id + "-flow-b", id + "-middle", id + "-end")
+
+
 def main():
     mx = ET.Element("mxfile", host="app.diagrams.net", version="24.7.17")
     page = ET.SubElement(mx, "diagram", id="architecture", name="AWS Architecture")
@@ -123,7 +332,7 @@ def main():
         ),
         (
             "bedrock",
-            "Amazon Bedrock<br>Converse tool use",
+            "Amazon Bedrock<br>Nova Lite · Converse",
             1970,
             510,
             "bedrock",
@@ -244,7 +453,7 @@ def main():
         vertical=True,
         points=[(929, 1150), (1649, 1150)],
     )
-    edge("worker-logs", "worker", "logs", "Logs", vertical=True)
+    edge("worker-logs", "worker", "logs", vertical=True)
     node(
         "limits",
         "Default 5 / maximum 8 steps · Batch size 1 · Worker 180s / SQS visibility 1080s<br>Curated knowledge, not live docs · Conditional claim is not crashed-run recovery<br>Amplify managed separately · DynamoDB retained on stack destroy",
@@ -287,6 +496,7 @@ def main():
             arr = ET.SubElement(geo, "Array", attrib={"as": "points"})
             for x, y in points:
                 ET.SubElement(arr, "mxPoint", x=str(x), y=str(y))
+    append_detail_pages(mx)
     ET.ElementTree(mx).write(
         ROOT / "architecture/aws-architecture.drawio",
         encoding="UTF-8",

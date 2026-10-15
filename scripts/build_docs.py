@@ -47,26 +47,32 @@ def main():
         ROOT / "scripts/check-aws-resources.sh",
         output / "scripts/check-aws-resources.sh",
     )
-    original = (ROOT / "docs/index.html").read_text()
-    index = (
-        original.replace("../architecture/", "architecture/")
-        .replace("../README.md", "README.md")
-        .replace("../REQUIREMENTS_MANISHA.md", "REQUIREMENTS_MANISHA.md")
-        .replace(
-            "../COPILOT_MASTER_PROMPT_MANISHA.md", "COPILOT_MASTER_PROMPT_MANISHA.md"
-        )
-    )
-    index = re.sub(
-        r'(href=")(?!https?:)([\w-]+\.md)(")',
-        lambda m: m[1]
-        + ("docs/" if (ROOT / "docs" / m[2]).is_file() else "")
-        + m[2]
-        + m[3],
-        index,
-    )
-    index = index.replace('src="assets/', 'src="docs/assets/')
-    (output / "index.html").write_text(index)
-    (output / "docs/index.html").write_text(original)
+    # Publish both pages at the root and retain the original docs/ link context.
+    for source in (ROOT / "docs").iterdir():
+        if source.suffix in {".css", ".js"}:
+            shutil.copy2(source, output / source.name)
+            shutil.copy2(source, output / "docs" / source.name)
+        elif source.suffix == ".html":
+            original = source.read_text()
+            page = original.replace("../architecture/", "architecture/")
+            for name in [
+                "README.md",
+                "REQUIREMENTS_MANISHA.md",
+                "COPILOT_MASTER_PROMPT_MANISHA.md",
+            ]:
+                page = page.replace("../" + name, name)
+            page = re.sub(
+                r'(href=")(?!https?:)([\w-]+\.md)(")',
+                lambda match: match[1]
+                + ("docs/" if (ROOT / "docs" / match[2]).is_file() else "")
+                + match[2]
+                + match[3],
+                page,
+            )
+            page = page.replace('src="assets/', 'src="docs/assets/')
+            (output / source.name).write_text(page)
+            (output / "docs" / source.name).write_text(original)
+    (output / ".nojekyll").touch()
     checked = 0
     for source in output.rglob("*"):
         if source.suffix == ".html":
@@ -95,11 +101,15 @@ def main():
                 )
             checked += 1
     tree = ET.parse(ROOT / "architecture/aws-architecture.drawio")
-    cells = tree.findall(".//mxCell")
-    ids = [cell.attrib["id"] for cell in cells]
-    if len(ids) != len(set(ids)):
-        raise RuntimeError("Duplicate draw.io IDs")
-    ET.parse(ROOT / "architecture/aws-architecture.svg")
+    for diagram in tree.findall("diagram"):
+        cells = diagram.findall(".//mxCell")
+        ids = [cell.attrib["id"] for cell in cells]
+        if len(ids) != len(set(ids)):
+            raise RuntimeError(f"Duplicate draw.io IDs in {diagram.attrib['name']}")
+        if any(cell.find("mxGeometry") is None for cell in cells if cell.get("edge") == "1"):
+            raise RuntimeError("Missing edge geometry")
+    for source in (ROOT / "architecture").glob("*.svg"):
+        ET.parse(source)
     print(
         f"Docs ready: docs/dist; {checked} local links validated; draw.io and SVG XML parsed"
     )

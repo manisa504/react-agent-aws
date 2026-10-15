@@ -45,3 +45,5 @@ Ctrl+C stops both application processes; Ctrl+C separately stops the docs server
 - Connection failure: ensure both processes are running. Polling pauses after a network failure; use Reconnect after restoring the API. Failed writes are never retried automatically.
 - Cognito screen during a local run: start with `make dev` and use the printed loopback URL. Do not use a LAN hostname for demo mode.
 - No workspace after restarting API: start a new task; local runs are intentionally ephemeral.
+
+The separate static portfolio and browser-only mockup are served by `make docs-preview` at `http://127.0.0.1:8080/` and `/demo.html`. This demo uses JavaScript fixtures rather than the Python API. See [portfolio publishing](portfolio-publishing.md) for its GitHub Pages workflow.
