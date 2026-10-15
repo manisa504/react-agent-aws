@@ -2,10 +2,10 @@
 
 ## Preconditions
 
-The chosen target is account `263429641790` (provided account ARN: `arn:aws:account::263429641790:account`), `AWS_PROFILE=research`, `AWS_REGION=us-east-1`. The account ARN identifies the destination; it does not provide credentials or an assumable role. Before any resource creation, authenticate with `aws login --profile research --region us-east-1`, then verify identity. Never commit credentials, passwords, or tokens. The root README records whether live deployment has actually been verified.
+The chosen target is account `263429641790` (provided account ARN: `arn:aws:account::263429641790:account`), `AWS_PROFILE=research`, `AWS_REGION=us-east-2`. The account ARN identifies the destination; it does not provide credentials or an assumable role. Before any resource creation, authenticate with `aws login --profile research --region us-east-2`, then verify identity. Never commit credentials, passwords, or tokens. The root README records whether live deployment has actually been verified.
 
 ```sh
-export AWS_PROFILE=research AWS_REGION=us-east-1
+export AWS_PROFILE=research AWS_REGION=us-east-2
 aws sts get-caller-identity
 export DEPLOY_ACCOUNT=263429641790
 test "$(aws sts get-caller-identity --query Account --output text)" = "$DEPLOY_ACCOUNT" || exit 1
@@ -21,7 +21,17 @@ Create an AWS Budget alert in the console and choose the notification recipient.
 
 ## Current account readiness
 
-Authentication to account `263429641790` succeeded, and Bedrock model/profile discovery worked in `us-east-1`. An organization service control policy explicitly denied `amplify:ListApps` and `cloudformation:DescribeStacks` for both `ReActWorkbenchStack` and `CDKToolkit`. Deployment is blocked by these account controls; no resources were provisioned. Have the account administrator review these specific denials and approve an environment for the documented architecture before continuing. Do not bypass the controls by changing roles or regions without authorization. Model listing alone does not establish invocation access.
+This account is the AWS Projects “Hold My Coffee” project. Its home Region is **US East (Ohio), `us-east-2`**, as supplied by the owner and corroborated by successful regional service checks. AWS manages organization guardrails in this experience. Earlier service denials were observed in `us-east-1`; they did not establish a general service restriction or a need to activate advanced features. See [AWS Projects Regions](https://docs.aws.amazon.com/accounts/latest/reference/project-regions.html) and [managed project policies](https://docs.aws.amazon.com/accounts/latest/reference/scps-and-rcps-for-projects.html).
+
+Read checks succeeded in Ohio for Lambda, DynamoDB, SQS, API Gateway, Cognito, Amplify and CloudFormation. No project resources or CDK bootstrap stack were found in Ohio, and the standard bootstrap version parameter was absent. Nova Lite is ACTIVE, supports ON_DEMAND in this Region, and reports AUTHORIZED/AVAILABLE. This verifies control-plane availability, not an actual paid model request. Prefer the in-region model `amazon.nova-lite-v1:0` with invocation resource `arn:aws:bedrock:us-east-2::foundation-model/amazon.nova-lite-v1:0`; verify tool behavior before claiming a successful live run.
+
+The owner reported a Free plan and credits. Do not activate advanced features, modify managed SCPs, or upgrade the plan automatically. If a concrete operation is restricted in the home Region, report that exact failure and consult the corresponding Projects documentation before proposing an account change. No separate human organization administrator is assumed.
+
+## Model selection and inference estimate
+
+The read-only Ohio model catalogue reports in-region ON_DEMAND support for Nova Lite. Use `BEDROCK_MODEL_ID=amazon.nova-lite-v1:0` and `BEDROCK_RESOURCE_ARNS='["arn:aws:bedrock:us-east-2::foundation-model/amazon.nova-lite-v1:0"]'`. The adapter sends the Nova-supported tool-schema subset while retaining full Pydantic validation in the application. Actual invocation remains a separate verification step.
+
+The AWS Price List API returned Ohio on-demand rates of **$0.00006 per 1,000 input tokens** and **$0.00024 per 1,000 output tokens** for Nova Lite. An illustrative ten-run demo with five calls per run, 4,000 input tokens and 1,000 output tokens per call costs **$0.024 for model inference**, calculated programmatically. This is an assumption-based example, not an observed usage total or a cap. Hosting/builds, Lambda, API requests, storage, queues, logs and alarms are additional. Review the owner-reported Free-plan balance in AWS Settings; it has not been independently verified. The Pricing API uses a separate supported global endpoint; this does not change the deployment home Region. [Bedrock pricing](https://aws.amazon.com/bedrock/pricing/).
 
 ## Git and Amplify preparation
 
@@ -60,7 +70,7 @@ Populate Amplify's build variables from the stack outputs:
 ```text
 VITE_DEMO_MODE=false
 VITE_API_URL=<ApiUrl>
-VITE_REGION=us-east-1
+VITE_REGION=us-east-2
 VITE_USER_POOL_ID=<UserPoolId>
 VITE_USER_POOL_CLIENT_ID=<UserPoolClientId>
 ```

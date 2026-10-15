@@ -4,7 +4,7 @@ const app = new App();
 new WorkbenchStack(app, "ReActWorkbenchStack", {
   env: {
     account: process.env.DEPLOY_ACCOUNT || "263429641790",
-    region: process.env.AWS_REGION || "us-east-1",
+    region: process.env.AWS_REGION || process.env.CDK_DEFAULT_REGION || "us-east-2",
   },
   modelId: process.env.BEDROCK_MODEL_ID || "configure-before-deployment",
   modelResourceArns: process.env.BEDROCK_RESOURCE_ARNS

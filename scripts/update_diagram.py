@@ -67,7 +67,7 @@ def main():
     )
     node(
         "cloud",
-        "AWS account · us-east-1 · no VPC / NAT",
+        "AWS account · us-east-2 · no VPC / NAT",
         410,
         210,
         1810,

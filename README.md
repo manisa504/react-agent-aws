@@ -6,7 +6,7 @@ Tool-calling assistants can repeat actions or give answers without evidence. Man
 
 **React** is the UI framework. **ReAct** is the model/tool action-and-observation pattern. Private chain-of-thought is never displayed.
 
-**Status:** implemented and verified locally in deterministic MOCK mode. AWS infrastructure is synthesized and tested. GitHub upload and AWS account authentication are verified; live deployment is blocked by organization policy denials for Amplify and CloudFormation in the selected region. A live Bedrock run and public AWS URL remain unverified. See [verification notes](docs/verification.md).
+**Status:** implemented and verified locally in deterministic MOCK mode. AWS infrastructure is synthesized and tested. GitHub upload and AWS account authentication are verified; the project home Region is Ohio (`us-east-2`), where read access to all planned regional services has been verified. Earlier denials were observed in `us-east-1`; an administrator policy change is not established as necessary. A live Bedrock run and public AWS URL remain unverified. See [verification notes](docs/verification.md).
 
 ![Actual local mock workbench screenshot](docs/assets/workbench-local.png)
 
@@ -78,7 +78,7 @@ Cloud reads use a JWT-derived owner, never request-supplied ownership. DynamoDB 
 
 ## AWS deployment and cleanup
 
-Target selected: account `263429641790`, profile `research`, region `us-east-1`, stack `ReActWorkbenchStack`, GitHub repository [`manisa504/react-agent-aws`](https://github.com/manisa504/react-agent-aws).
+Target selected: account `263429641790`, profile `research`, region `us-east-2`, stack `ReActWorkbenchStack`, GitHub repository [`manisa504/react-agent-aws`](https://github.com/manisa504/react-agent-aws).
 
 Follow [AWS deployment](docs/aws-deploy.md), then [complete teardown](docs/aws-deploy-teardown.md). Deployment requires a verified account, model access, actual model pricing, CDK diff review, and the required owner approval. Amplify's Git authorization is manual. Local synthesis targets account `263429641790` but uses placeholder model/origin values unless real configuration is provided; it is not deployment evidence.
 

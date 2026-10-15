@@ -6,7 +6,7 @@ Executed locally on October 15, 2026. These results concern the implemented loca
 | --- | --- |
 | `make setup` | PASS: virtual environment and both npm lockfiles installed |
 | `make verify` | PASS: complete automated local gate |
-| Python pytest | 45 passed |
+| Python pytest | 46 passed |
 | Frontend Vitest | 14 passed, including terminal polling, reconnection and abort behavior |
 | CDK assertions | 1 passed, covering resource counts, authentication, CORS, retention and worker bounds |
 | Deterministic evaluations | 12/12 passed; generated report under backend/evals/report.json |
@@ -14,7 +14,8 @@ Executed locally on October 15, 2026. These results concern the implemented loca
 | Frontend production build | PASS |
 | Lambda package | PASS: Linux x86_64 CPython 3.12 wheels and application assets |
 | Linux container imports | PASS: FastAPI, Pydantic, Mangum, boto3 and application initialization |
-| CDK synth, strict/no-lookups | PASS; target account 263429641790, placeholder model/origin for local synthesis |
+| CDK synth, strict/no-lookups | PASS; target account 263429641790 in us-east-2 |
+| Ohio CDK diff, no change set | PASS; new stack compared against the authenticated account, using Nova Lite and a placeholder frontend origin pending Amplify connection |
 | Documentation build | PASS: 58 local links, draw.io and SVG XML |
 | Development API smoke | PASS: five scenarios, routes, proxy and validation |
 | Development Chrome E2E | 2 passed; success/citations, bounds/errors, refresh and 320px layout |
@@ -32,10 +33,14 @@ Nonblocking dependency deprecation notices were emitted by Starlette/AnyIO and b
 
 The supplied repository is public. The implementation was pushed without changing its visibility. GitHub Actions runs the committed CI workflow; see [workflow runs](https://github.com/manisa504/react-agent-aws/actions/workflows/ci.yml) for the authoritative remote status. The local commit author uses the authenticated GitHub account and its noreply email.
 
+## AWS Projects home Region correction
+
+The owner identified the project home Region as `us-east-2` (Ohio). Read-only checks in Ohio succeeded for Lambda, DynamoDB, SQS, API Gateway, Cognito, Amplify, and CloudFormation. Earlier `us-east-1` denials did not establish a general service restriction. No advanced-feature activation, SCP edit, or plan upgrade is required by the successful read checks, and none was performed. AWS CLI defaults and project code/documentation now use Ohio.
+
 ## Cloud prerequisites still outstanding
 
-- AWS authentication now succeeds for account `263429641790` using profile `research` and role `AccountFullAccessRole`. In `us-east-1`, an organization service control policy explicitly denied `amplify:ListApps` and `cloudformation:DescribeStacks` for both the project stack and CDKToolkit. An administrator must approve the deployment environment/policy before cloud preparation can continue. Signing in again does not remove these policy restrictions.
-- Amazon Nova Micro/Lite/Pro appeared ACTIVE in the regional foundation-model list; system-defined Nova inference profiles were also listed. This verifies discovery only, not invocation permission or tool execution. Confirm actual model/tool access and pricing, then configure exact invocation ARNs.
+- AWS authentication succeeds for account `263429641790` using profile `research`. The Ohio CloudFormation stack list was empty, and the standard CDK bootstrap version parameter was absent; prepare bootstrap for Ohio after reviewing its resources.
+- In Ohio, `amazon.nova-lite-v1:0` is ACTIVE, lists ON_DEMAND support, and reports AUTHORIZED/AVAILABLE. Configure its exact regional invocation ARN and verify an actual tool-using run before claiming live inference.
 - Finish Amplify's Git authorization and supply its real origin.
 - Review the actual CDK diff/account/model/costs at the required deployment approval checkpoint, then deploy and execute authenticated live smoke/ownership checks.
 

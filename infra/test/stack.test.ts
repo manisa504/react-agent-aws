@@ -4,10 +4,10 @@ import { Template, Match } from "aws-cdk-lib/assertions";
 import { WorkbenchStack } from "../lib/workbench-stack";
 test("bounded async stack, protected routes and retained storage", () => {
   const stack = new WorkbenchStack(new App(), "Test", {
-    env: { account: "111111111111", region: "us-east-1" },
+    env: { account: "111111111111", region: "us-east-2" },
     modelId: "test-model",
     modelResourceArns: [
-      "arn:aws:bedrock:us-east-1::foundation-model/test-model",
+      "arn:aws:bedrock:us-east-2::foundation-model/test-model",
     ],
     frontendOrigin: "https://example.com",
   });
@@ -41,7 +41,7 @@ test("bounded async stack, protected routes and retained storage", () => {
       Statement: Match.arrayWith([
         Match.objectLike({
           Action: "bedrock:InvokeModel",
-          Resource: "arn:aws:bedrock:us-east-1::foundation-model/test-model",
+          Resource: "arn:aws:bedrock:us-east-2::foundation-model/test-model",
         }),
       ]),
     },

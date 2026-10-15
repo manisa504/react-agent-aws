@@ -11,13 +11,13 @@ from app.models import Run, StepEvent
 
 @mock_aws
 def test_dynamo_claim_steps_usage_and_ttl():
-    boto3.client("dynamodb", region_name="us-east-1").create_table(
+    boto3.client("dynamodb", region_name="us-east-2").create_table(
         TableName="runs",
         KeySchema=[{"AttributeName": "PK", "KeyType": "HASH"}, {"AttributeName": "SK", "KeyType": "RANGE"}],
         AttributeDefinitions=[{"AttributeName": "PK", "AttributeType": "S"}, {"AttributeName": "SK", "AttributeType": "S"}],
         BillingMode="PAY_PER_REQUEST",
     )
-    repo = DynamoRepository("runs", "us-east-1")
+    repo = DynamoRepository("runs", "us-east-2")
     run = Run(task="hello", owner_id="alice")
     repo.create(run)
     assert repo.get(run.run_id).owner_id == "alice"
@@ -80,3 +80,16 @@ def test_bad_model_response(response):
     client.converse.return_value = response
     with pytest.raises(ValueError):
         BedrockModel("model", client).decide("task", [])
+
+
+def test_nova_wire_schema_preserves_server_side_validation():
+    from pydantic import ValidationError
+    from app.bedrock_client import tool_schema
+    from app.models import CalculatorArgs
+
+    schema = tool_schema(CalculatorArgs)
+    assert set(schema) == {"type", "properties", "required"}
+    assert schema["properties"] == {"expression": {"type": "string"}}
+    assert schema["required"] == ["expression"]
+    with pytest.raises(ValidationError):
+        CalculatorArgs(expression="1" * 201)

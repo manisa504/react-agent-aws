@@ -5,7 +5,7 @@ Teardown is destructive and requires explicit owner approval for the named resou
 ## Confirm the target and save inventory
 
 ```sh
-export AWS_PROFILE=research AWS_REGION=us-east-1
+export AWS_PROFILE=research AWS_REGION=us-east-2
 aws sts get-caller-identity
 # Confirm Account/Arn with the owner before any deletion.
 aws cloudformation describe-stacks --stack-name ReActWorkbenchStack
