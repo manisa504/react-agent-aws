@@ -1,6 +1,6 @@
 # Verification record
 
-Executed locally on October 15, 2026. These results concern the implemented local application and synthesized infrastructure. No live AWS resources, Bedrock invocation, or GitHub upload have been verified.
+Executed locally on October 15, 2026. These results concern the implemented local application and synthesized infrastructure. The implementation was uploaded to `manisa504/react-agent-aws` on `main` (initial implementation commit `8bfe71b`). GitHub authentication and the remote push are verified. No live AWS resources or Bedrock invocation have been verified.
 
 | Check | Executed result |
 | --- | --- |
@@ -28,10 +28,13 @@ The twelve fixtures cover four successful two-tool runs, three unsupported cases
 
 Nonblocking dependency deprecation notices were emitted by Starlette/AnyIO and botocore under Python 3.12. Application tests pass. No test result or screenshot is fabricated.
 
+## GitHub verification
+
+The supplied repository is public. The implementation was pushed without changing its visibility. GitHub Actions runs the committed CI workflow; see [workflow runs](https://github.com/manisa504/react-agent-aws/actions/workflows/ci.yml) for the authoritative remote status. The local commit author uses the authenticated GitHub account and its noreply email.
+
 ## Cloud prerequisites still outstanding
 
 - The AWS browser authorization timed out without completing. Restart `aws login --profile research --region us-east-1`, finish browser authorization, then verify that Account is `263429641790` and inspect the authenticated Arn.
-- Complete GitHub CLI browser authorization, configure commit author metadata from the authenticated account, then push to the supplied `manisa504/react-agent-aws` repository. Its empty remote was verified and `origin` is configured; no upload has occurred.
 - Verify regional Bedrock model/tool access and actual pricing; configure exact invocation ARNs.
 - Finish Amplify's Git authorization and supply its real origin.
 - Review the actual CDK diff/account/model/costs at the required deployment approval checkpoint, then deploy and execute authenticated live smoke/ownership checks.

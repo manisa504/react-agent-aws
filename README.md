@@ -1,5 +1,7 @@
 # ReAct Agent Workbench
 
+[Source repository](https://github.com/manisa504/react-agent-aws) · [Automated checks](https://github.com/manisa504/react-agent-aws/actions/workflows/ci.yml)
+
 Tool-calling assistants can repeat actions or give answers without evidence. Manisha's workbench demonstrates an agent with two safe tools, an inspectable action trace, and an enforced stopping point.
 
 **React** is the UI framework. **ReAct** is the model/tool action-and-observation pattern. Private chain-of-thought is never displayed.
