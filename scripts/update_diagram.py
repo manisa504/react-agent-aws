@@ -49,7 +49,7 @@ def main():
     )
     node(
         "title",
-        "<b>ReAct Agent Workbench — AWS architecture</b><br>Manisha | 2026-10-15 | Implemented infrastructure, deployment unverified",
+        "<b>ReAct Agent Workbench — AWS architecture</b><br>Manisha | 2026-10-15 | Deployed in US East (Ohio), us-east-2",
         60,
         35,
         1200,
@@ -247,7 +247,7 @@ def main():
     edge("worker-logs", "worker", "logs", "Logs", vertical=True)
     node(
         "limits",
-        "Default 5 / maximum 8 decisions · Batch size 1 · Worker 180s / SQS visibility 1080s<br>Curated knowledge, not live docs · Conditional claim is not crashed-run recovery<br>Amplify managed separately · DynamoDB retained on stack destroy",
+        "Default 5 / maximum 8 steps · Batch size 1 · Worker 180s / SQS visibility 1080s<br>Curated knowledge, not live docs · Conditional claim is not crashed-run recovery<br>Amplify managed separately · DynamoDB retained on stack destroy",
         60,
         1050,
         800,

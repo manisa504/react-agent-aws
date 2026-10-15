@@ -1,12 +1,12 @@
 # Verification record
 
-Executed locally on October 15, 2026. These results concern the implemented local application and synthesized infrastructure. The implementation was uploaded to `manisa504/react-agent-aws` on `main` (initial implementation commit `8bfe71b`). GitHub authentication and the remote push are verified. No live AWS resources or Bedrock invocation have been verified.
+Executed on October 15, 2026, locally and against the deployed AWS application in Ohio. The implementation is on `main` at [manisa504/react-agent-aws](https://github.com/manisa504/react-agent-aws). Cognito authentication, real Bedrock inference, persisted steps, and cross-user isolation were verified. See the live evidence below.
 
 | Check | Executed result |
 | --- | --- |
 | `make setup` | PASS: virtual environment and both npm lockfiles installed |
 | `make verify` | PASS: complete automated local gate |
-| Python pytest | 46 passed |
+| Python pytest | 50 passed |
 | Frontend Vitest | 14 passed, including terminal polling, reconnection and abort behavior |
 | CDK assertions | 1 passed, covering resource counts, authentication, CORS, retention and worker bounds |
 | Deterministic evaluations | 12/12 passed; generated report under backend/evals/report.json |
@@ -15,15 +15,15 @@ Executed locally on October 15, 2026. These results concern the implemented loca
 | Lambda package | PASS: Linux x86_64 CPython 3.12 wheels and application assets |
 | Linux container imports | PASS: FastAPI, Pydantic, Mangum, boto3 and application initialization |
 | CDK synth, strict/no-lookups | PASS; target account 263429641790 in us-east-2 |
-| Ohio CDK diff, no change set | PASS; new stack compared against the authenticated account, using Nova Lite and a placeholder frontend origin pending Amplify connection |
-| Documentation build | PASS: 58 local links, draw.io and SVG XML |
+| Ohio CDK diff, no change set | PASS; actual Nova Lite ARN and Amplify origin reviewed; subsequent code-only updates deployed successfully |
+| Documentation build | PASS: local links validated, draw.io and SVG XML |
 | Development API smoke | PASS: five scenarios, routes, proxy and validation |
 | Development Chrome E2E | 2 passed; success/citations, bounds/errors, refresh and 320px layout |
 | Standalone showcase in Chrome | PASS: screenshot/diagram load, no missing local assets, 320px layout |
 
 Production preview API smoke and both Chrome E2E tests passed after the final build. An earlier production browser attempt failed because a concurrent verification build replaced the served assets with cloud-mode configuration. The final check is run sequentially after rebuilding local preview. Do not rebuild `frontend/dist` in another process while testing `make preview`.
 
-The screenshots under `docs/assets` are generated from the actual local application. They show MOCK inference, not a hosted or live Bedrock result. Mock evaluations do not measure Bedrock accuracy or establish general prompt-injection immunity.
+`workbench-local.png` and `workbench-mobile.png` show actual local MOCK execution. `workbench-cloud.png` shows the actual Amplify application with a successful Bedrock run using a temporary test identity. Mock evaluations do not measure Bedrock accuracy or establish general prompt-injection immunity.
 
 The twelve fixtures cover four successful two-tool runs, three unsupported cases, two bounded loops, two invalid/tool-error runs, and one injected-observation case. Unit tests additionally cover input/tool schemas, numeric bounds, redaction, owner isolation, duplicate claims, deadlines and malformed model responses. SDK tests use mocked Bedrock and Moto DynamoDB, not AWS services.
 
@@ -37,11 +37,28 @@ The supplied repository is public. The implementation was pushed without changin
 
 The owner identified the project home Region as `us-east-2` (Ohio). Read-only checks in Ohio succeeded for Lambda, DynamoDB, SQS, API Gateway, Cognito, Amplify, and CloudFormation. Earlier `us-east-1` denials did not establish a general service restriction. No advanced-feature activation, SCP edit, or plan upgrade is required by the successful read checks, and none was performed. AWS CLI defaults and project code/documentation now use Ohio.
 
-## Cloud prerequisites still outstanding
+## Executed live AWS verification
 
-- AWS authentication succeeds for account `263429641790` using profile `research`. The Ohio CloudFormation stack list was empty, and the standard CDK bootstrap version parameter was absent; prepare bootstrap for Ohio after reviewing its resources.
-- In Ohio, `amazon.nova-lite-v1:0` is ACTIVE, lists ON_DEMAND support, and reports AUTHORIZED/AVAILABLE. Configure its exact regional invocation ARN and verify an actual tool-using run before claiming live inference.
-- Finish Amplify's Git authorization and supply its real origin.
-- Review the actual CDK diff/account/model/costs at the required deployment approval checkpoint, then deploy and execute authenticated live smoke/ownership checks.
+- Target account `263429641790`, profile `research`, Region `us-east-2`; identity verified before deployment. CDKToolkit bootstrap and ReActWorkbenchStack creation succeeded; latest application update reached UPDATE_COMPLETE.
+- Amplify app `ds93i2ygk81q9`, branch `main`, connected to the supplied repository. Public introduction and direct `/app` navigation work at [the hosted site](https://main.ds93i2ygk81q9.amplifyapp.com).
+- Public health returned 200; unauthenticated submission returned 401. CORS preflight returned 204 with exactly the Amplify origin.
+- Two temporary Cognito users authenticated using SRP and access tokens. User B received 404 for user A's metadata and step endpoints. Test account creation suppressed email delivery; both temporary users were removed afterward.
+- Two actual Bedrock runs succeeded: one authenticated API submission and one through the hosted React UI. Both used calculator and curated knowledge search, calculated 7,200, and cited IDs returned by real tool observations.
+- Strongly consistent DynamoDB reads verified META plus every ordered STEP record for both runs, with terminal status matching the public API.
+- Chrome verified hosted sign-in, submission, API CORS, successful final display, route refresh, and preserved sign-in without runtime errors. The cloud screenshot was captured from that successful browser session.
+- Worker configuration reads confirmed 180-second timeout, SQS visibility 1,080 seconds, redrive count five, enabled event mapping and batch size one. Both CloudWatch alarms reported OK. No notification subscriptions or AWS Budget alert were created.
 
-No AWS provisioning, deletion, or paid inference was executed. The [AWS deployment](aws-deploy.md) and [teardown](aws-deploy-teardown.md) guides describe those remaining operations accurately.
+### Observed successful run usage
+
+| Submission | Steps | Input tokens | Output tokens | Result |
+| --- | --- | --- | --- | --- |
+| Authenticated API | 3 | 3239 | 384 | SUCCEEDED / FINAL_ANSWER |
+| Amplify browser | 5 | 4970 | 547 | SUCCEEDED / FINAL_ANSWER |
+
+These are Bedrock-reported tokens for these two successful runs only. They exclude earlier diagnostic requests and are not a billing total. Live smoke verification is not a general model-quality benchmark. The twelve deterministic evaluations remain separate MOCK tests.
+
+### Failures found and corrected during deployment
+
+The first live run executed both tools but failed strict final JSON parsing. The adapter now uses Nova's structured completion schema while retaining Pydantic and citation validation. A subsequent hosted sample requested two native tools in one response and was safely rejected by the original single-request adapter. Native batches now execute sequentially, one action per controller step. Added tests prove batches cannot bypass step limits and completion cannot be mixed with pending tool requests. Both successful live runs above were executed after those corrections.
+
+A full local verification attempt collided with a concurrently running CDK deployment's output-directory lock. It was rerun sequentially after deployment and passed. The current local resource snapshot is `.build/aws-resource-inventory.json`; stack outputs and diagnostic logs stay ignored by Git. Teardown remains a separate destructive action requiring explicit owner approval; none was performed.

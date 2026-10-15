@@ -13,6 +13,8 @@ aws cloudformation list-stack-resources --stack-name ReActWorkbenchStack > .buil
 bash scripts/check-aws-resources.sh
 ```
 
+The deployed hosting app is `ds93i2ygk81q9`, branch `main`, domain `https://main.ds93i2ygk81q9.amplifyapp.com`, in Ohio. The backend stack is `ReActWorkbenchStack` in account `263429641790`. A read-only resource snapshot was saved locally to `.build/aws-resource-inventory.json`; refresh it before teardown. These identifiers do not authorize deletion.
+
 Record the confirmed account, region, stack name, Amplify App ID/branch/domain, table name, SQS/DLQ URLs, functions, log groups, Cognito pool/client, API ID and alarm names. Use `.build/aws-outputs.json` and CloudFormation's resource inventory. Save the specific IDs before destroying the stack. Do not publish account inventory or credentials in Git.
 
 Stop new requests and disable Amplify auto-builds. Save screenshots and any run data that should survive. Explain that the DynamoDB table is retained intentionally and ask whether its data should be exported or deleted.

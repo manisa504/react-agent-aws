@@ -6,11 +6,11 @@ Tool-calling assistants can repeat actions or give answers without evidence. Man
 
 **React** is the UI framework. **ReAct** is the model/tool action-and-observation pattern. Private chain-of-thought is never displayed.
 
-**Status:** implemented and verified locally in deterministic MOCK mode. AWS infrastructure is synthesized and tested. GitHub upload and AWS account authentication are verified; the project home Region is Ohio (`us-east-2`), where read access to all planned regional services has been verified. Earlier denials were observed in `us-east-1`; an administrator policy change is not established as necessary. A live Bedrock run and public AWS URL remain unverified. See [verification notes](docs/verification.md).
+**Status:** deployed and verified in US East (Ohio), `us-east-2`, using in-region Amazon Nova Lite. [Open the live workbench](https://main.ds93i2ygk81q9.amplifyapp.com/app). Cognito sign-in is required; public registration is disabled. Both tools, cited answers, DynamoDB persistence and cross-user isolation passed live checks. Local MOCK mode remains available without AWS credentials. See [verification notes](docs/verification.md).
 
-![Actual local mock workbench screenshot](docs/assets/workbench-local.png)
+![Actual hosted Bedrock workbench screenshot](docs/assets/workbench-cloud.png)
 
-*Actual local application; scripted mock inference, real calculator and knowledge-search execution. This screenshot does not represent an AWS deployment.*
+*Actual Amplify application and Bedrock result, captured with a temporary test account. [Local MOCK screenshot](docs/assets/workbench-local.png).*
 
 ## Run locally
 
@@ -72,7 +72,7 @@ flowchart LR
   Worker --> Logs
 ```
 
-Submission returns HTTP 202; the UI polls every two seconds until terminal. Local background execution and the SQS worker use the same controller. Each model decision counts toward the 3–8 step budget, including a final answer. Tools use typed arguments. Arithmetic accepts bounded numeric expressions, parentheses and `+ - * / %`, with no `eval`. Search reads ten curated entries; it is not live AWS documentation. Citation IDs must come from actual retrieved observations.
+Submission returns HTTP 202; the UI polls every two seconds until terminal. Local background execution and the SQS worker use the same controller. Each tool execution and the final answer count toward the 3–8 step budget. Native batched Bedrock tool requests execute sequentially, one per step. Tools use typed arguments. Arithmetic accepts bounded numeric expressions, parentheses and `+ - * / %`, with no `eval`. Search reads ten curated entries; it is not live AWS documentation. Citation IDs must come from actual retrieved observations.
 
 Cloud reads use a JWT-derived owner, never request-supplied ownership. DynamoDB stores `RUN#id` / `META` and `STEP#000n`, with seven-day TTL. There is no global scan or recent-run list. The worker conditionally claims `QUEUED → RUNNING`; duplicate messages skip claimed or completed runs. **A crash after claim can leave RUNNING state stranded; automatic recovery is deferred.** This is at-least-once processing, not exactly-once execution.
 
@@ -80,7 +80,7 @@ Cloud reads use a JWT-derived owner, never request-supplied ownership. DynamoDB 
 
 Target selected: account `263429641790`, profile `research`, region `us-east-2`, stack `ReActWorkbenchStack`, GitHub repository [`manisa504/react-agent-aws`](https://github.com/manisa504/react-agent-aws).
 
-Follow [AWS deployment](docs/aws-deploy.md), then [complete teardown](docs/aws-deploy-teardown.md). Deployment requires a verified account, model access, actual model pricing, CDK diff review, and the required owner approval. Amplify's Git authorization is manual. Local synthesis targets account `263429641790` but uses placeholder model/origin values unless real configuration is provided; it is not deployment evidence.
+Follow [AWS deployment](docs/aws-deploy.md), then [complete teardown](docs/aws-deploy-teardown.md). Deployment requires a verified account, model access, actual model pricing, CDK diff review, and the required owner approval. Amplify app `ds93i2ygk81q9` is connected to the supplied repository and `main`. Fresh deployments still require manual Git authorization. Local synthesis uses placeholder model/origin values unless real configuration is exported; see the deployment guide for the verified configuration.
 
 The DynamoDB table is retained on stack destruction and needs a conscious separate deletion. Amplify is separately managed. CloudWatch alarms exist but have no email subscriptions configured; inspect their state in the console. Budget alerts are not spending caps. Never remove shared CDK bootstrap assets as project cleanup.
 
