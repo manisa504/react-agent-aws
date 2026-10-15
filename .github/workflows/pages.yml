@@ -6,6 +6,7 @@ on:
       - "docs/**"
       - "architecture/**"
       - "scripts/build_docs.py"
+      - "scripts/generate_portfolio.py"
       - "README.md"
       - "backend/evals/report.json"
       - ".github/workflows/pages.yml"

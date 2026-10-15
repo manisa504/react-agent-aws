@@ -35,3 +35,12 @@ Higgsfield was used during authoring for a conceptual image, not HTML generation
 ## Removing this static publication
 
 After explicit owner approval, disable Pages in repository Settings → Pages (or delete the Pages site through GitHub's API) and disable/remove its publishing workflow. Keep the source unless its deletion is also requested. This publication is separate from Amplify and the retained AWS resources described in the [AWS teardown guide](aws-deploy-teardown.md).
+
+
+## Evidence-backed visual case study
+
+The current portfolio is rendered from `portfolio.template.html` by `scripts/generate_portfolio.py`, called by `make docs-build`. Edit the template/CSS/JS rather than manually changing the generated index. The renderer reads the executed evaluation report, the sanitized recorded live evidence, and the architecture catalog. It validates fixture IDs, expected termination reasons, step bounds, positive actual model usage, event ordering/counts and retrieved citation IDs before rendering.
+
+The page includes an inline SVG system drawing, nine visible architecture panels with filters and full-size viewers, an accessible three-step observed-trace explainer, actual run usage, all twelve evaluation rows, live acceptance checks, tradeoffs and original-resolution screenshot viewers. Every diagram can be opened as SVG or downloaded as editable draw.io. No new inference is required to build or read the case study.
+
+The sanitized snapshot `assets/live-verification.json` records the previously executed live smoke checks. It contains no owner credentials or tokens and does not imply continuous monitoring. Updated evaluations must come from running the fixtures. Browser acceptance now checks the nine-view atlas, filters, diagram/screenshot viewers, trace tabs and result rows in addition to the static demo scenarios.

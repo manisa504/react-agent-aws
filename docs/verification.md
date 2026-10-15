@@ -69,7 +69,7 @@ After the final hosting rebuild, a fresh HTTP check exposed a 301-to-404 respons
 
 On October 15, 2026, the portfolio was rebuilt as a two-page static site. A fresh screenshot was captured from the live public Amplify introduction, and another from a real local MOCK run stopping at five steps. Manisha's clean signed-in screenshot is included with provenance. Existing live Bedrock evidence remains labeled separately from the static demonstration.
 
-The draw.io source now contains three pages (AWS topology, cloud run lifecycle, execution modes), exported using the installed draw.io CLI and visually reviewed. The guides distinguish concurrent polling from worker processing and document the retained table and deferred crashed-run recovery.
+The initial portfolio revision included three draw.io pages (AWS topology, cloud run lifecycle, execution modes). The subsequent visual case-study revision expands the master to nine functional views with independently editable sources and visible gallery panels. The guides distinguish concurrent polling from worker processing and document the retained table and deferred crashed-run recovery.
 
 Executed browser checks passed at both the local site root and the `/react-agent-aws/` project subpath:
 
@@ -85,3 +85,12 @@ Executed browser checks passed at both the local site root and the `/react-agent
 The new credential supplied for Higgsfield authenticated successfully; one conceptual illustration was generated through Recraft V4.1 and downloaded. Earlier incomplete-credential attempts returned 401. No credentials are saved in the source or bundled for visitors. Artwork is explicitly distinguished from app screenshots and architecture diagrams; see [asset provenance](assets/README.md).
 
 GitHub Pages is enabled with HTTPS and the custom publishing workflow. See [publishing instructions](portfolio-publishing.md) and the [Pages workflow runs](https://github.com/manisa504/react-agent-aws/actions/workflows/pages.yml) for deployment status. This static publication is independent of the live Amplify application.
+
+
+## Visual case-study revision
+
+The original portfolio placed only one diagram inline and linked the additional views. The redesigned portfolio makes nine distinct source-derived drawings visible: topology, request lifecycle, execution modes, authentication/isolation, submission/queue, agent control, persistence, failures/recovery, and delivery. Every view has an SVG and editable draw.io source; the master retains all nine pages. An inline SVG drawing introduces the logical system before scrolling.
+
+All twelve evaluation rows and both recorded live-run usage rows are rendered from the executed reports. The sanitized live snapshot is [available as JSON](assets/live-verification.json). The renderer validates fixture/result consistency, step bounds and actual retrieved citation IDs. Recorded live results remain observations from October 15; the site redesign does not create new paid model calls or claim continuous service monitoring.
+
+Browser acceptance checks the nine-panel gallery, runtime/operations filters, full-size diagram and screenshot viewers, keyboard-operable trace tabs, result row counts, mobile layout, and all six static demo scenarios. These replace the earlier single-diagram-only portfolio checks. The complete CI and Pages workflow histories remain authoritative for the published revision.

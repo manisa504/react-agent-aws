@@ -31,7 +31,7 @@ try {
   await page.goto(base, { waitUntil: "networkidle", timeout: 20000 });
   console.log("Portfolio loaded");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "A little more evidence",
+    "An agent you",
   );
   await page
     .locator("img")
@@ -47,10 +47,41 @@ try {
     { timeout: 15000 },
   );
   console.log("Images loaded");
-  await page.getByRole("button", { name: "View full diagram" }).click();
+  await expect(page.locator(".atlas-card")).toHaveCount(9);
+  await page
+    .getByRole("button", { name: "Runtime & security", exact: true })
+    .click();
+  await expect(page.locator(".atlas-card:not([hidden])")).toHaveCount(5);
+  await page
+    .getByRole("button", { name: "Data & operations", exact: true })
+    .click();
+  await expect(page.locator(".atlas-card:not([hidden])")).toHaveCount(4);
+  await page.getByRole("button", { name: "All nine", exact: true }).click();
+  await page.getByRole("button", { name: "Explore diagram" }).first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).not.toBeVisible();
+  await page.getByRole("tab", { name: "02 Calculate safely" }).click();
+  await expect(page.locator("#trace-output")).toHaveText("15 * 60 * 8 = 7200");
+  await page.getByRole("tab", { name: "02 Calculate safely" }).focus();
+  await page.keyboard.press("End");
+  await expect(
+    page.getByRole("tab", { name: "03 Validate completion" }),
+  ).toHaveAttribute("aria-selected", "true");
+  await expect(page.locator("#trace-output")).toContainText(
+    "3,239 input / 384 output",
+  );
+  await page.locator(".evaluation-details summary").first().click();
+  await expect(page.locator(".evaluation-details tbody tr")).toHaveCount(12);
+  await page.locator(".evaluation-details summary").first().click();
+  await expect(page.locator(".result-card table tbody tr")).toHaveCount(2);
+  await page.locator(".gallery-button").first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.locator("#dialog-image")).toHaveAttribute(
+    "data-kind",
+    "screenshot",
+  );
+  await page.keyboard.press("Escape");
   await page.screenshot({
     path: ".build/portfolio-desktop.png",
     fullPage: true,
@@ -171,7 +202,7 @@ try {
   });
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.screenshot({
-    path: "docs/assets/static-demo.png",
+    path: ".build/static-demo-desktop.png",
     fullPage: true,
     animations: "disabled",
   });

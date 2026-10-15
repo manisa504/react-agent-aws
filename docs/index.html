@@ -3,392 +3,792 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0c1520" />
     <meta
       name="description"
-      content="Manisha's ReAct Agent Workbench: a deployed AWS agent with safe tools, bounded execution and evidence. Explore the architecture and try the interactive demo."
+      content="A deployed ReAct agent on AWS. Explore nine editable architecture diagrams, a playable demo, real Bedrock results and twelve deterministic evaluations. Built by Manisha."
     />
-    <meta name="theme-color" content="#f6f5f1" />
-    <title>ReAct Workbench — An AI engineering project by Manisha</title>
-    <link rel="stylesheet" href="site.css" />
+    <title>ReAct Workbench — Inside a bounded AI system</title>
+    <link rel="stylesheet" href="portfolio.css" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <header>
       <nav class="nav wrap" aria-label="Main navigation">
         <a class="brand" href="index.html"
-          ><span class="brand-mark" aria-hidden="true">⌘</span>ReAct /
-          Workbench</a
+          ><svg viewBox="0 0 32 32" aria-hidden="true">
+            <path
+              d="M7 7h8v8H7zM17 17h8v8h-8zM11 15v6h6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            /></svg
+          >ReAct <span>/ WORKBENCH</span></a
         >
         <div class="navlinks">
-          <a class="desktop" href="#architecture">Architecture</a
-          ><a class="desktop" href="#evidence">In action</a
+          <a href="#architecture">Architecture</a><a href="#results">Results</a
           ><a
-            class="desktop"
             href="https://github.com/manisa504/react-agent-aws"
-            >GitHub ↗</a
-          ><a class="nav-cta" href="demo.html">Try the demo ↗</a>
+            class="desktop"
+            >Source ↗</a
+          ><a href="demo.html" class="nav-cta">Launch demo ↗</a>
         </div>
       </nav>
     </header>
     <main id="main">
       <section class="hero wrap">
-        <div class="eyebrow">
-          <span class="dot"></span> An AI engineering project by Manisha
-        </div>
-        <h1>A little more evidence.<br />A lot more <em>clarity.</em></h1>
-        <div class="hero-bottom">
-          <div>
-            <p>
-              A tool-using agent that shows its work and knows when to stop.
-              Built with React, Python, and Amazon Bedrock. Deployed on AWS.
-            </p>
-            <div class="buttons">
-              <a class="btn primary" href="demo.html"
-                >Explore the interactive demo <span>↗</span></a
-              ><a
-                class="btn secondary"
-                href="https://github.com/manisa504/react-agent-aws"
-                >View source <span>↗</span></a
-              >
-            </div>
-          </div>
-          <div class="hero-note">
-            STATIC DEMO · NO SIGN-IN<br />Live AWS version also available<br /><a
-              href="https://main.ds93i2ygk81q9.amplifyapp.com/app"
-              >Open authenticated workbench ↗</a
+        <div class="hero-copy">
+          <div class="eyebrow"><i></i> MANISHA · AI ENGINEERING / AWS</div>
+          <h1>An agent you<br />can <em>inspect.</em></h1>
+          <p class="lead">
+            Tools that act. Evidence you can trace. A system with a stopping
+            point.
+          </p>
+          <p class="hero-description">
+            An end-to-end ReAct workbench built with React, FastAPI and Amazon
+            Bedrock. Explore the implementation from authenticated submission to
+            a persisted, cited answer.
+          </p>
+          <div class="buttons">
+            <a class="btn primary" href="demo.html"
+              >Explore the interactive demo <span>↗</span></a
+            ><a class="btn secondary" href="#architecture"
+              >Open architecture atlas ↓</a
             >
           </div>
-        </div>
-        <div class="product-shot">
-          <div class="window-top">
-            <i></i><i></i><i></i
-            ><span>ReAct Workbench / a real Bedrock execution</span>
+          <div class="hero-status">
+            <span class="signal"></span>DEPLOYED IN OHIO
+            <span class="muted">/</span> amazon.nova-lite-v1:0
           </div>
-          <img
-            src="assets/workbench-cloud.png"
-            alt="Actual AWS-hosted workbench showing a successful Bedrock run, search and calculator events, and reported token usage"
-            fetchpriority="high"
-            width="1440"
-            height="1561"
-          />
         </div>
-        <div class="shot-caption">
-          <span>01 / Actual application · Amazon Bedrock · US East (Ohio)</span
-          ><span>Real execution, captured October 15, 2026</span>
-        </div>
-        <div class="metrics">
-          <div><strong>2</strong><span>Allowlisted tools</span></div>
-          <div><strong>8</strong><span>Maximum execution steps</span></div>
-          <div>
-            <strong>12 / 12</strong
-            ><span>Deterministic evaluations passed</span>
+        <div class="system-drawing">
+          <div class="drawing-label mono">
+            <span>FIG 01 / LOGICAL SYSTEM</span><span>us-east-2</span>
           </div>
-          <div><strong>Ohio</strong><span>Deployed in us-east-2</span></div>
+          <svg
+            class="hero-map"
+            viewBox="0 0 680 540"
+            role="img"
+            aria-labelledby="hero-map-title hero-map-desc"
+          >
+            <title id="hero-map-title">A drawn map of the live AWS agent</title>
+            <desc id="hero-map-desc">
+              The browser authenticates with Cognito and submits to an HTTP API
+              and Lambda. SQS invokes a worker, which calls Bedrock and safe
+              tools and records results in DynamoDB.
+            </desc>
+            <defs>
+              <pattern
+                id="grid"
+                width="28"
+                height="28"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="1" cy="1" r="1" fill="#294052" />
+              </pattern>
+              <marker
+                id="arrow"
+                markerWidth="7"
+                markerHeight="7"
+                refX="6"
+                refY="3.5"
+                orient="auto"
+              >
+                <path d="M0 0L7 3.5L0 7" fill="#62cfc4" />
+              </marker>
+            </defs>
+            <rect width="680" height="540" fill="url(#grid)" />
+            <path
+              class="map-path"
+              d="M160 270H250M340 270H425M515 270H590V150H515M470 315V410H340M295 410H110V315M295 365V315"
+              fill="none"
+              stroke="#62cfc4"
+              stroke-width="2"
+              marker-end="url(#arrow)"
+            />
+            <path
+              d="M110 225V110H250M340 110H470V225"
+              fill="none"
+              stroke="#8094b1"
+              stroke-dasharray="6 6"
+              stroke-width="1.5"
+            />
+            <rect
+              x="45"
+              y="225"
+              width="130"
+              height="90"
+              rx="13"
+              fill="#142b3b"
+              stroke="#405d73"
+            />
+            <rect
+              x="250"
+              y="225"
+              width="100"
+              height="90"
+              rx="13"
+              fill="#152d3d"
+              stroke="#62cfc4"
+            />
+            <rect
+              x="425"
+              y="225"
+              width="105"
+              height="90"
+              rx="13"
+              fill="#29312c"
+              stroke="#f8a963"
+            />
+            <rect
+              x="425"
+              y="105"
+              width="105"
+              height="90"
+              rx="13"
+              fill="#2a2337"
+              stroke="#bca4ed"
+            />
+            <rect
+              x="245"
+              y="365"
+              width="110"
+              height="90"
+              rx="13"
+              fill="#19283f"
+              stroke="#80a8e8"
+            />
+            <rect
+              x="245"
+              y="75"
+              width="105"
+              height="70"
+              rx="13"
+              fill="#1c2938"
+              stroke="#8094b1"
+            />
+            <g fill="none" stroke="#b9d9e5" stroke-width="2">
+              <rect x="85" y="243" width="48" height="28" rx="3" />
+              <path
+                d="M109 271v9m-15 0h30M282 245h34m-34 11h34m-34 11h20M451 247h18v18h-18zm23 10h18v18h-18zM288 389c-24 0-24 12 0 12s24-12 0-12zm-18 6v20c0 12 36 12 36 0v-20M459 132l-10 12 20 13 17-20 16 10M287 92l-10 5v13c0 9 10 14 10 14s10-5 10-14V97z"
+              />
+            </g>
+            <g
+              fill="#e5f2f6"
+              font-family="system-ui,sans-serif"
+              font-size="13"
+              text-anchor="middle"
+            >
+              <text x="110" y="300">Browser</text>
+              <text x="300" y="300">HTTP API</text>
+              <text x="478" y="300">SQS / worker</text>
+              <text x="478" y="180">Bedrock</text>
+              <text x="300" y="442">DynamoDB</text>
+              <text x="300" y="137">Cognito</text>
+            </g>
+            <g fill="#7898ad" font-family="monospace" font-size="11">
+              <text x="189" y="250">JWT</text>
+              <text x="367" y="250">202</text>
+              <text x="550" y="210">Converse</text>
+              <text x="353" y="400">persist</text>
+              <text x="72" y="345">poll 2s</text>
+            </g>
+            <circle cx="470" cy="335" r="4" fill="#f8a963" />
+            <text
+              x="478"
+              y="500"
+              text-anchor="middle"
+              fill="#a2b5c5"
+              font-size="12"
+              font-family="monospace"
+            >
+              calculator + curated search
+            </text>
+          </svg>
+          <div class="drawing-footer">
+            <span>Two tools. One bounded controller.</span
+            ><span class="pulse-label">ACTION → OBSERVATION</span>
+          </div>
         </div>
       </section>
-      <section class="section wrap" id="approach">
+      <div class="stack-band">
+        <div class="wrap">
+          <span>REACT / TYPESCRIPT</span><span>FASTAPI / PYTHON</span
+          ><span>BEDROCK CONVERSE</span><span>CDK / SERVERLESS</span
+          ><span>COGNITO / JWT</span>
+        </div>
+      </div>
+      <section class="section wrap" id="overview">
         <div class="section-head">
           <div>
-            <div class="eyebrow">01 / The engineering</div>
-            <h2>Useful autonomy.<br />Explicit boundaries.</h2>
+            <div class="eyebrow">01 / THE WORKING PRODUCT</div>
+            <h2>A question goes in.<br />An inspectable run comes out.</h2>
           </div>
           <p>
-            A model calling a tool is the easy part. This project makes the
-            surrounding system inspectable: who can submit a task, what can
-            execute, which evidence supports the answer, and how the run ends.
+            The interface exposes actions and evidence—not private reasoning.
+            The deployed version uses real Bedrock inference. The public
+            playground reproduces the experience with clearly labeled fixtures.
           </p>
         </div>
-        <div class="decisions">
-          <article class="decision">
-            <span class="n">01</span>
-            <h3>A finish line for every run.</h3>
-            <p>
-              A Python controller enforces a 3–8 step budget, bounded model
-              output and a runtime deadline. Success, insufficient evidence,
-              invalid tools and step limits have distinct outcomes.
-            </p>
-          </article>
-          <article class="decision">
-            <span class="n">02</span>
-            <h3>Two tools. Clear contracts.</h3>
-            <p>
-              A restricted arithmetic parser and curated knowledge search.
-              Pydantic validates arguments before execution; final citation IDs
-              must come from the observations actually retrieved.
-            </p>
-          </article>
-          <article class="decision">
-            <span class="n">03</span>
-            <h3>A trace you can inspect.</h3>
-            <p>
-              The interface shows ordered actions, observations, sources and
-              termination reasons. It never displays private model reasoning.
-              The static demo lets you explore that experience immediately.
-            </p>
-          </article>
-          <article class="decision">
-            <span class="n">04</span>
-            <h3>Cloud execution with ownership.</h3>
-            <p>
-              Cognito protects API access. JWT-derived ownership isolates runs.
-              SQS decouples submission from the worker, and conditional DynamoDB
-              claims skip already claimed messages.
-            </p>
-          </article>
+        <div class="product-stage">
+          <div class="stage-caption">
+            <span class="mono">ACTUAL APPLICATION / AMAZON BEDROCK</span
+            ><a href="https://main.ds93i2ygk81q9.amplifyapp.com/app"
+              >Open live application · Sign-in required ↗</a
+            >
+          </div>
+          <div class="product-columns">
+            <figure>
+              <div class="screen-frame">
+                <img
+                  src="assets/workbench-cloud.png"
+                  alt="Actual deployed workbench: Bedrock run with five events, reported usage and the 7200-image answer"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                Real hosted execution · October 15, 2026 · Scroll to inspect the
+                full capture
+              </figcaption>
+            </figure>
+            <aside class="run-evidence">
+              <span class="small-label">OBSERVED LIVE RESULT</span>
+              <div class="big-result">
+                7,200<span>images / 15 minutes</span>
+              </div>
+              <div class="mini-trace">
+                <div>
+                  <b>01</b
+                  ><span
+                    >Retrieve curated AWS evidence<small
+                      >knowledge_search</small
+                    ></span
+                  >
+                </div>
+                <div>
+                  <b>02</b
+                  ><span
+                    >Calculate the arrival volume<small
+                      >15 × 60 × 8</small
+                    ></span
+                  >
+                </div>
+                <div>
+                  <b>03</b
+                  ><span
+                    >Validate and cite the answer<small
+                      >FINAL_ANSWER</small
+                    ></span
+                  >
+                </div>
+              </div>
+              <p>
+                This three-step trace comes from the authenticated API smoke
+                run. The browser screenshot shows a separate five-step live run.
+              </p>
+              <a href="#results">See both observed runs ↓</a>
+            </aside>
+          </div>
         </div>
+        <div class="proof-strip">
+          <div><b>50</b><span>Python tests passed</span></div>
+          <div><b>14</b><span>Frontend tests passed</span></div>
+          <div>
+            <b>12 / 12</b
+            ><span>Deterministic evaluations</span>
+          </div>
+          <div><b>9</b><span>Architecture views</span></div>
+        </div>
+        <p class="provenance-line">
+          Test counts are the last verified suite results, not live telemetry.
+          Evaluation outcomes below are generated from the executed report.
+        </p>
       </section>
-      <section class="section architecture" id="architecture">
+      <section class="section atlas-section" id="architecture">
         <div class="wrap">
           <div class="section-head">
             <div>
-              <div class="eyebrow">02 / Under the hood</div>
-              <h2>One task.<br />A complete system.</h2>
+              <div class="eyebrow">02 / THE ARCHITECTURE ATLAS</div>
+              <h2>Every major workflow.<br />Drawn separately.</h2>
             </div>
             <p>
-              The diagram is drawn in draw.io from the implemented AWS stack and
-              request flow. Follow the fast HTTP submission, asynchronous
-              execution, and authenticated polling path.
+              Nine source-derived views, each visible here and independently
+              downloadable. Open any drawing to inspect it at full size. The
+              master draw.io file contains all nine pages.
             </p>
           </div>
-          <div class="diagram-frame">
-            <img
-              src="../architecture/aws-architecture.svg"
-              alt="Exact AWS architecture: Amplify and Cognito, API Gateway, FastAPI Lambda, DynamoDB, SQS worker, Bedrock, safe tools, dead-letter queue and CloudWatch"
-              loading="lazy"
-            />
-            <div class="diagram-bar">
-              <button class="text-button" id="open-diagram" type="button">
-                View full diagram ↗
+          <div class="atlas-toolbar">
+            <div
+              class="filter-buttons"
+              role="group"
+              aria-label="Architecture views"
+            >
+              <button type="button" data-filter="all" aria-pressed="true">
+                All nine</button
+              ><button type="button" data-filter="runtime" aria-pressed="false">
+                Runtime & security</button
+              ><button
+                type="button"
+                data-filter="operations"
+                aria-pressed="false"
+              >
+                Data & operations
               </button>
-              <div>
-                <a href="../architecture/aws-architecture.drawio" download
-                  >Editable draw.io</a
-                >
-                ·
-                <a href="../architecture/aws-architecture.svg" download
-                  >Download SVG</a
-                >
-                ·
-                <a href="../architecture/aws-architecture.md"
-                  >Technical guide</a
-                >
-              </div>
             </div>
+            <a href="../architecture/aws-architecture.drawio" download
+              >Download the complete draw.io atlas ↗</a
+            >
           </div>
-          <p style="font-size: 12px; margin-top: 20px">
-            <a href="../architecture/aws-run-lifecycle.svg"
-              >View the detailed run lifecycle ↗</a
-            >
-            ·
-            <a href="../architecture/execution-modes.svg"
-              >Compare static, local and cloud execution ↗</a
-            >
+          <div class="atlas-grid"><article class="atlas-card" id="view-aws-architecture">
+<div class="atlas-image"><img src="../architecture/aws-architecture.svg" loading="lazy" alt="System topology: Deployed AWS services and their integration boundaries."></div>
+<div class="atlas-copy"><span class="mono">VIEW 01</span><h3>System topology</h3><p>Deployed AWS services and their integration boundaries.</p>
+<div class="atlas-links"><button type="button" data-diagram="aws-architecture" data-title="System topology">Explore diagram ↗</button><a href="../architecture/aws-architecture.svg">SVG</a><a href="../architecture/aws-architecture.drawio" download>draw.io</a></div><small>Source: infra/lib/workbench-stack.ts</small></div></article><article class="atlas-card" id="view-aws-run-lifecycle">
+<div class="atlas-image"><img src="../architecture/aws-run-lifecycle.svg" loading="lazy" alt="Request lifecycle: From SRP sign-in to HTTP 202, concurrent polling and a cited answer."></div>
+<div class="atlas-copy"><span class="mono">VIEW 02</span><h3>Request lifecycle</h3><p>From SRP sign-in to HTTP 202, concurrent polling and a cited answer.</p>
+<div class="atlas-links"><button type="button" data-diagram="aws-run-lifecycle" data-title="Request lifecycle">Explore diagram ↗</button><a href="../architecture/aws-run-lifecycle.svg">SVG</a><a href="../architecture/aws-run-lifecycle.drawio" download>draw.io</a></div><small>Source: backend/app/api.py · frontend/src/hooks/useRunPolling.ts</small></div></article><article class="atlas-card" id="view-execution-modes">
+<div class="atlas-image"><img src="../architecture/execution-modes.svg" loading="lazy" alt="Three execution modes: Static JavaScript fixtures, local Python MOCK, and real AWS execution."></div>
+<div class="atlas-copy"><span class="mono">VIEW 03</span><h3>Three execution modes</h3><p>Static JavaScript fixtures, local Python MOCK, and real AWS execution.</p>
+<div class="atlas-links"><button type="button" data-diagram="execution-modes" data-title="Three execution modes">Explore diagram ↗</button><a href="../architecture/execution-modes.svg">SVG</a><a href="../architecture/execution-modes.drawio" download>draw.io</a></div><small>Source: docs/demo.js · scripts/dev.py · backend/app/worker.py</small></div></article><article class="atlas-card" id="view-auth-isolation">
+<div class="atlas-image"><img src="../architecture/auth-isolation.svg" loading="lazy" alt="Authentication &amp; isolation: Token validation, trusted subject extraction and ownership checks on every read."></div>
+<div class="atlas-copy"><span class="mono">VIEW 04</span><h3>Authentication &amp; isolation</h3><p>Token validation, trusted subject extraction and ownership checks on every read.</p>
+<div class="atlas-links"><button type="button" data-diagram="auth-isolation" data-title="Authentication &amp; isolation">Explore diagram ↗</button><a href="../architecture/auth-isolation.svg">SVG</a><a href="../architecture/auth-isolation.drawio" download>draw.io</a></div><small>Source: backend/app/auth.py · backend/app/api.py</small></div></article><article class="atlas-card" id="view-submission-queue">
+<div class="atlas-image"><img src="../architecture/submission-queue.svg" loading="lazy" alt="Submission &amp; asynchronous work: The fast submission path, SQS handoff and conditional worker claim."></div>
+<div class="atlas-copy"><span class="mono">VIEW 05</span><h3>Submission &amp; asynchronous work</h3><p>The fast submission path, SQS handoff and conditional worker claim.</p>
+<div class="atlas-links"><button type="button" data-diagram="submission-queue" data-title="Submission &amp; asynchronous work">Explore diagram ↗</button><a href="../architecture/submission-queue.svg">SVG</a><a href="../architecture/submission-queue.drawio" download>draw.io</a></div><small>Source: backend/app/api.py · backend/app/worker.py</small></div></article><article class="atlas-card" id="view-agent-control">
+<div class="atlas-image"><img src="../architecture/agent-control.svg" loading="lazy" alt="Bounded agent controller: Typed tools, sequential native batches, real observations and validated completion."></div>
+<div class="atlas-copy"><span class="mono">VIEW 06</span><h3>Bounded agent controller</h3><p>Typed tools, sequential native batches, real observations and validated completion.</p>
+<div class="atlas-links"><button type="button" data-diagram="agent-control" data-title="Bounded agent controller">Explore diagram ↗</button><a href="../architecture/agent-control.svg">SVG</a><a href="../architecture/agent-control.drawio" download>draw.io</a></div><small>Source: backend/app/agent.py · backend/app/bedrock_client.py</small></div></article><article class="atlas-card" id="view-data-persistence">
+<div class="atlas-image"><img src="../architecture/data-persistence.svg" loading="lazy" alt="Persistence &amp; evidence model: META ownership, ordered STEP records, strongly consistent reads and TTL."></div>
+<div class="atlas-copy"><span class="mono">VIEW 07</span><h3>Persistence &amp; evidence model</h3><p>META ownership, ordered STEP records, strongly consistent reads and TTL.</p>
+<div class="atlas-links"><button type="button" data-diagram="data-persistence" data-title="Persistence &amp; evidence model">Explore diagram ↗</button><a href="../architecture/data-persistence.svg">SVG</a><a href="../architecture/data-persistence.drawio" download>draw.io</a></div><small>Source: backend/app/dynamo.py · backend/app/models.py</small></div></article><article class="atlas-card" id="view-failure-recovery">
+<div class="atlas-image"><img src="../architecture/failure-recovery.svg" loading="lazy" alt="Failures, duplicates &amp; recovery: Handled agent failures versus delivery retries, and the explicit recovery gap."></div>
+<div class="atlas-copy"><span class="mono">VIEW 08</span><h3>Failures, duplicates &amp; recovery</h3><p>Handled agent failures versus delivery retries, and the explicit recovery gap.</p>
+<div class="atlas-links"><button type="button" data-diagram="failure-recovery" data-title="Failures, duplicates &amp; recovery">Explore diagram ↗</button><a href="../architecture/failure-recovery.svg">SVG</a><a href="../architecture/failure-recovery.drawio" download>draw.io</a></div><small>Source: backend/app/agent.py · backend/app/worker.py</small></div></article><article class="atlas-card" id="view-delivery-pipeline">
+<div class="atlas-image"><img src="../architecture/delivery-pipeline.svg" loading="lazy" alt="Build, deploy &amp; offboard: CI, GitHub Pages and Amplify automation; manual CDK backend deployment."></div>
+<div class="atlas-copy"><span class="mono">VIEW 09</span><h3>Build, deploy &amp; offboard</h3><p>CI, GitHub Pages and Amplify automation; manual CDK backend deployment.</p>
+<div class="atlas-links"><button type="button" data-diagram="delivery-pipeline" data-title="Build, deploy &amp; offboard">Explore diagram ↗</button><a href="../architecture/delivery-pipeline.svg">SVG</a><a href="../architecture/delivery-pipeline.drawio" download>draw.io</a></div><small>Source: .github/workflows · amplify.yml · infra/bin/app.ts</small></div></article></div>
+          <p class="atlas-source">
+            Drawn in draw.io from the CDK stack and application source. These
+            diagrams describe implemented behavior, including its limitations;
+            they are not generated product mockups.
           </p>
-          <div class="flow-notes">
-            <div>
-              <b>01 — Submit & authenticate</b>
-              <p>
-                Cognito SRP sign-in → access JWT → HTTP API authorizer. FastAPI
-                records a QUEUED run, sends its ID to SQS, and returns HTTP 202.
-              </p>
+        </div>
+      </section>
+      <section class="section wrap" id="execution">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">03 / FOLLOW A REAL RUN</div>
+            <h2>The loop has a boundary.</h2>
+          </div>
+          <p>
+            Step through a visual explanation of the successful three-step API
+            run. This replays an observed trace; it does not invoke a model. The
+            live model's decisions can vary.
+          </p>
+        </div>
+        <div class="trace-explorer">
+          <div
+            class="trace-controls"
+            role="tablist"
+            aria-label="Observed execution steps"
+          >
+            <button
+              role="tab"
+              aria-selected="true"
+              aria-controls="trace-panel"
+              id="trace-0"
+              data-trace="0"
+            >
+              01 <span>Retrieve evidence</span></button
+            ><button
+              role="tab"
+              aria-selected="false"
+              aria-controls="trace-panel"
+              id="trace-1"
+              data-trace="1"
+              tabindex="-1"
+            >
+              02 <span>Calculate safely</span></button
+            ><button
+              role="tab"
+              aria-selected="false"
+              aria-controls="trace-panel"
+              id="trace-2"
+              data-trace="2"
+              tabindex="-1"
+            >
+              03 <span>Validate completion</span>
+            </button>
+          </div>
+          <div
+            id="trace-panel"
+            class="trace-panel"
+            role="tabpanel"
+            aria-labelledby="trace-0"
+          >
+            <div class="trace-illustration" aria-hidden="true">
+              <svg viewBox="0 0 480 200">
+                <path
+                  d="M60 100H420"
+                  stroke="#335467"
+                  stroke-width="2"
+                  stroke-dasharray="8 8"
+                />
+                <g id="trace-nodes">
+                  <rect x="35" y="55" width="100" height="90" rx="14" />
+                  <rect x="190" y="55" width="100" height="90" rx="14" />
+                  <rect x="345" y="55" width="100" height="90" rx="14" />
+                </g>
+                <g
+                  fill="#d6e7ed"
+                  text-anchor="middle"
+                  font-family="monospace"
+                  font-size="12"
+                >
+                  <text x="85" y="105">SEARCH</text>
+                  <text x="240" y="105">CALCULATE</text>
+                  <text x="395" y="105">CITE</text>
+                </g>
+              </svg>
             </div>
-            <div>
-              <b>02 — Execute & record</b>
-              <p>
-                A separate worker claims the run, calls Bedrock Converse,
-                validates actions, executes tools, and stores ordered step
-                events in DynamoDB.
+            <div class="trace-detail">
+              <span class="small-label" id="trace-label"
+                >TOOL / KNOWLEDGE_SEARCH</span
+              >
+              <h3 id="trace-title">Evidence before recommendations.</h3>
+              <p id="trace-description">
+                Retrieve notes about SQS, EventBridge and dead-letter queues.
+                Only IDs returned by actual tool observations can support the
+                final answer.
               </p>
-            </div>
-            <div>
-              <b>03 — Poll & finish</b>
-              <p>
-                The UI polls metadata and events every two seconds and stops at
-                a terminal state. Every read checks ownership. Logs and alarms
-                support diagnosis.
-              </p>
+              <pre id="trace-output">AWS-SQS · AWS-EVENTBRIDGE · AWS-DLQ</pre>
             </div>
           </div>
+        </div>
+      </section>
+      <section class="section results-section" id="results">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">04 / THE EXECUTED RESULTS</div>
+              <h2>Separate the evidence<br />from the demonstration.</h2>
+            </div>
+            <p>
+              Actual Bedrock smoke results, deterministic engineering
+              evaluations, and a static UI replica serve different purposes.
+              They are recorded separately here.
+            </p>
+          </div>
+          <div class="results-split">
+            <article class="result-card">
+              <span class="label green">LIVE / BEDROCK</span>
+              <h3>Two successful real runs.</h3>
+              <p>
+                Recorded October 15, 2026 · Nova Lite · Ohio. Actual response
+                token counts, not estimated usage.
+              </p>
+              <div class="table-scroll">
+                <table>
+                  <caption class="sr-only">
+                    Observed live Bedrock run results
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th>Submission</th>
+                      <th>Steps</th>
+                      <th>Input</th>
+                      <th>Output</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Authenticated API</td><td>3 / 5</td><td>3,239</td><td>384</td><td><span class='pass'>SUCCEEDED</span></td></tr><tr><td>Amplify browser</td><td>5 / 5</td><td>4,970</td><td>547</td><td><span class='pass'>SUCCEEDED</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="fineprint">
+                These two runs exclude earlier diagnostic and failed requests.
+                No billing total or general model-quality claim is inferred.
+              </p>
+              <a href="assets/live-verification.json"
+                >Download recorded live evidence ↗</a
+              >
+            </article>
+            <article class="result-card coverage">
+              <span class="label orange">ENGINEERING / MOCK</span>
+              <h3>12 of 12 fixtures passed.</h3>
+              <div class="coverage-bars">
+                <div>
+                  <span>Two-tool success</span
+                  ><i style="--coverage: 100%; --bar: #65c9bd"></i><b>4 / 4</b>
+                </div>
+                <div>
+                  <span>Unsupported evidence</span
+                  ><i style="--coverage: 75%; --bar: #83a9e2"></i><b>3 / 3</b>
+                </div>
+                <div>
+                  <span>Bounded loops</span
+                  ><i style="--coverage: 50%; --bar: #b19ce4"></i><b>2 / 2</b>
+                </div>
+                <div>
+                  <span>Rejected / failed tools</span
+                  ><i style="--coverage: 50%; --bar: #f4aa72"></i><b>2 / 2</b>
+                </div>
+                <div>
+                  <span>Injected observation</span
+                  ><i style="--coverage: 25%; --bar: #dfcd92"></i><b>1 / 1</b>
+                </div>
+              </div>
+              <p class="fineprint">
+                Bars show fixture counts, not model accuracy. One injection
+                fixture does not establish general prompt-injection immunity.
+              </p>
+            </article>
+          </div>
+          <details class="evaluation-details">
+            <summary>
+              Inspect all twelve executed evaluations <span>↓</span>
+            </summary>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fixture</th>
+                    <th>Assertion</th>
+                    <th>Run status</th>
+                    <th>Termination reason</th>
+                    <th>Steps</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>success-1</td><td><span class='pass'>PASS</span></td><td>SUCCEEDED</td><td>FINAL_ANSWER</td><td>3</td></tr><tr><td>success-2</td><td><span class='pass'>PASS</span></td><td>SUCCEEDED</td><td>FINAL_ANSWER</td><td>3</td></tr><tr><td>success-3</td><td><span class='pass'>PASS</span></td><td>SUCCEEDED</td><td>FINAL_ANSWER</td><td>3</td></tr><tr><td>success-4</td><td><span class='pass'>PASS</span></td><td>SUCCEEDED</td><td>FINAL_ANSWER</td><td>3</td></tr><tr><td>unsupported-1</td><td><span class='pass'>PASS</span></td><td>FAILED</td><td>UNSUPPORTED</td><td>1</td></tr><tr><td>unsupported-2</td><td><span class='pass'>PASS</span></td><td>FAILED</td><td>UNSUPPORTED</td><td>1</td></tr><tr><td>unsupported-3</td><td><span class='pass'>PASS</span></td><td>FAILED</td><td>UNSUPPORTED</td><td>1</td></tr><tr><td>loop-3</td><td><span class='pass'>PASS</span></td><td>LIMIT_REACHED</td><td>STEP_LIMIT</td><td>3</td></tr><tr><td>loop-5</td><td><span class='pass'>PASS</span></td><td>LIMIT_REACHED</td><td>STEP_LIMIT</td><td>5</td></tr><tr><td>invalid-tool</td><td><span class='pass'>PASS</span></td><td>FAILED</td><td>INVALID_TOOL</td><td>1</td></tr><tr><td>tool-error</td><td><span class='pass'>PASS</span></td><td>FAILED</td><td>TOOL_ERROR</td><td>1</td></tr><tr><td>injection</td><td><span class='pass'>PASS</span></td><td>SUCCEEDED</td><td>FINAL_ANSWER</td><td>3</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="fineprint">
+              Report generated: 2026-10-15T22:27:42.326128+00:00 ·
+              <a href="../backend/evals/report.json">Source JSON</a>. An
+              expected failure or step limit can pass its evaluation.
+            </p>
+          </details>
+          <details class="evaluation-details">
+            <summary>Inspect live acceptance checks <span>↓</span></summary>
+            <ul class="checklist">
+              <li><span aria-hidden='true'>✓</span>Two temporary Cognito users created with email delivery suppressed</li><li><span aria-hidden='true'>✓</span>Health is public and submission requires JWT authentication</li><li><span aria-hidden='true'>✓</span>Cognito SRP access-token authentication</li><li><span aria-hidden='true'>✓</span>Real Bedrock run used both tools, returned 7200 and cited actual retrieved evidence</li><li><span aria-hidden='true'>✓</span>Second Cognito user cannot read first user run or steps</li><li><span aria-hidden='true'>✓</span>Amplify browser sign-in, API CORS, real model execution and final UI</li><li><span aria-hidden='true'>✓</span>Cloud /app route refresh and persisted sign-in</li><li><span aria-hidden='true'>✓</span>DynamoDB persisted actual run metadata and ordered steps</li>
+            </ul>
+          </details>
+          <div class="verification-links">
+            <a href="verification.md">Complete verification record ↗</a
+            ><a
+              href="https://github.com/manisa504/react-agent-aws/actions/workflows/ci.yml"
+              >Authoritative CI history ↗</a
+            >
+          </div>
+        </div>
+      </section>
+      <section class="section wrap" id="decisions">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">05 / ENGINEERING TRADEOFFS</div>
+            <h2>Boundaries are<br />part of the design.</h2>
+          </div>
+          <p>
+            The build is intentionally compact. Its guarantees are specific, and
+            the operational gaps are documented.
+          </p>
+        </div>
+        <div class="tradeoff-grid">
+          <article>
+            <span class="drawn-icon" aria-hidden="true">⤳</span>
+            <h3>Queue the work.</h3>
+            <p>
+              HTTP returns 202 after enqueue. Bedrock work runs in a separate
+              Lambda with a 180-second timeout; SQS visibility is 18 minutes.
+            </p>
+          </article>
+          <article>
+            <span class="drawn-icon" aria-hidden="true">◇</span>
+            <h3>Constrain execution.</h3>
+            <p>
+              Two allowlisted tools, typed arguments and citation checks. No
+              browsing, shell execution, vector database or additional agents.
+            </p>
+          </article>
+          <article>
+            <span class="drawn-icon" aria-hidden="true">↻</span>
+            <h3>Document the recovery gap.</h3>
+            <p>
+              Delivery is at least once. Conditional claims skip duplicates, but
+              a crash after claim can strand a RUNNING record. Automatic
+              recovery is deferred.
+            </p>
+          </article>
+          <article>
+            <span class="drawn-icon" aria-hidden="true">▤</span>
+            <h3>Own the offboarding.</h3>
+            <p>
+              DynamoDB is retained on stack deletion. Amplify and GitHub Pages
+              have separate lifecycles. Alarms have no notification
+              subscriptions configured.
+            </p>
+          </article>
         </div>
       </section>
       <section class="section wrap" id="evidence">
         <div class="section-head">
           <div>
-            <div class="eyebrow">03 / From the working application</div>
-            <h2>Built. Deployed.<br />Actually exercised.</h2>
+            <div class="eyebrow">06 / APPLICATION GALLERY</div>
+            <h2>The product,<br />as it actually runs.</h2>
           </div>
           <p>
-            These are screenshots of the application, not concept renders. The
-            hosted version uses Bedrock; local MOCK mode makes failure and limit
-            scenarios repeatable without credentials.
+            Genuine captures of the live application and local runtime, plus the
+            explicitly labeled static playground. Expand a screenshot to inspect
+            its original resolution.
           </p>
         </div>
-        <div class="evidence-grid">
+        <div class="gallery">
           <figure>
-            <div class="screenshot-box">
-              <img
-                src="assets/workbench-cloud.png"
-                alt="Successful live Bedrock run with both tools and the 7200-image result"
-                loading="lazy"
-              />
-            </div>
-            <figcaption>
-              <strong>Live AWS / Successful execution</strong>Real Bedrock
-              usage, five recorded steps and returned source IDs. Scroll the
-              image to inspect the outcome.
-            </figcaption>
-          </figure>
-          <figure>
-            <div class="screenshot-box">
+            <button
+              class="gallery-button"
+              type="button"
+              data-image="assets/workbench-bounded.png"
+              data-title="Local MOCK / Step limit"
+            >
               <img
                 src="assets/workbench-bounded.png"
-                alt="Actual local application terminating at the configured step limit in MOCK mode"
+                alt="Actual local workbench stopping at its five-step limit"
                 loading="lazy"
               />
-            </div>
+            </button>
             <figcaption>
-              <strong>Local MOCK / Step limit enforced</strong>A deterministic
-              loop stops at its configured budget. No model calls or token usage
-              are fabricated.
+              <b>Local runtime / Bound enforced</b
+              ><span>Python controller + FakeModel · Actual capture</span>
             </figcaption>
           </figure>
           <figure>
-            <div class="screenshot-box">
+            <button
+              class="gallery-button"
+              type="button"
+              data-image="assets/static-demo.png"
+              data-title="Static replica / Scripted scenario"
+            >
+              <img
+                src="assets/static-demo.png"
+                alt="Static browser-only demo showing a scripted successful run"
+                loading="lazy"
+              />
+            </button>
+            <figcaption>
+              <b>Public playground / Scripted result</b
+              ><span>JavaScript fixtures · No model invocation</span>
+            </figcaption>
+          </figure>
+          <figure>
+            <button
+              class="gallery-button"
+              type="button"
+              data-image="assets/workbench-landing.png"
+              data-title="Live Amplify / Introduction"
+            >
               <img
                 src="assets/workbench-landing.png"
-                alt="Fresh screenshot of the public introduction on the deployed Amplify application"
+                alt="Actual public Amplify application introduction"
                 loading="lazy"
               />
-            </div>
+            </button>
             <figcaption>
-              <strong>Live AWS / Public introduction</strong>The deployed entry
-              page leads into the authenticated workbench.
+              <b>Live AWS / Public introduction</b
+              ><span>Actual deployed application · October 15, 2026</span>
             </figcaption>
           </figure>
           <figure>
-            <div class="screenshot-box">
+            <button
+              class="gallery-button"
+              type="button"
+              data-image="assets/workbench-owner.png"
+              data-title="Live AWS / Owner-captured workspace"
+            >
               <img
                 src="assets/workbench-owner.png"
-                alt="Screenshot supplied by Manisha of the cloud workbench ready for a task"
+                alt="Manisha's saved screenshot of the signed-in live workspace"
                 loading="lazy"
               />
-            </div>
+            </button>
             <figcaption>
-              <strong>Live AWS / Owner-captured workspace</strong>Manisha's
-              saved screenshot of the signed-in application. Captured October
-              15, 2026.
+              <b>Live AWS / Owner-captured workspace</b
+              ><span>Screenshot supplied by Manisha</span>
             </figcaption>
           </figure>
-        </div>
-        <div class="proof">
-          <p>
-            <b>Evidence over claims.</b> Live verification covered Cognito
-            login, both tools, persisted steps and cross-user isolation. Twelve
-            deterministic fixtures cover engineering behavior; they do not
-            establish general model accuracy or prompt-injection immunity.
-          </p>
-          <a href="verification.md">Read the verification record ↗</a>
         </div>
       </section>
       <section class="section wrap" id="play">
         <div class="play-callout">
           <div>
-            <div class="eyebrow">04 / Take the controls</div>
-            <h2>Try a run.<br />Then try breaking it.</h2>
+            <div class="eyebrow">07 / TRY IT YOURSELF</div>
+            <h2>Start a run.<br />Inspect the stopping point.</h2>
             <p>
-              A browser-only replica of the workbench. Explore success,
-              insufficient evidence, invalid actions and a loop that runs out of
-              steps. All results are scripted and clearly labeled.
+              Six browser-only scenarios: a cited answer, adjustable
+              calculation, unsupported evidence, a loop, a rejected tool and a
+              service failure.
             </p>
-            <div class="buttons">
-              <a class="btn" href="demo.html"
-                >Open the playground <span>↗</span></a
-              >
-            </div>
+            <a class="btn primary" href="demo.html">Open the playground ↗</a>
           </div>
-          <div class="play-side">
-            <figure class="play-art">
-              <img
-                src="assets/bounded-path.webp"
-                alt="Concept illustration of lilac glass nodes following a finite path to an emerald endpoint"
-                loading="lazy"
-                width="1344"
-                height="768"
-              />
-              <figcaption>
-                Concept illustration · Generated with Higgsfield
-              </figcaption>
-            </figure>
-            <div class="play-steps">
-              <div><span>01</span>Choose a mock scenario.</div>
-              <div><span>02</span>Set the budget. Start execution.</div>
-              <div>
-                <span>03</span>Expand observations. Inspect the outcome.
-              </div>
-              <div><span>04</span>Reset and explore another path.</div>
-            </div>
-          </div>
+          <figure>
+            <img
+              src="assets/bounded-path.webp"
+              alt="Concept illustration of connected glass nodes following a finite path"
+              loading="lazy"
+            />
+            <figcaption>
+              Concept artwork generated with Higgsfield · The technical diagrams
+              above are drawn in draw.io.
+            </figcaption>
+          </figure>
         </div>
       </section>
       <section class="section wrap" id="resources">
         <div class="section-head">
           <div>
-            <div class="eyebrow">05 / Open the implementation</div>
-            <h2>The details are here.</h2>
+            <div class="eyebrow">08 / THE IMPLEMENTATION</div>
+            <h2>Read it. Run it.<br />Inspect the source.</h2>
           </div>
           <p>
-            Source code, reproducible evaluations, local setup, deployment and
-            cleanup instructions. The diagram's editable source is included in
-            the repository.
+            Built by Manisha across frontend, Python agent control, AWS
+            infrastructure, testing and deployment. Every diagram and result
+            links back to its source.
           </p>
         </div>
-        <div class="resources">
-          <a
-            class="resource"
-            href="https://github.com/manisa504/react-agent-aws"
-            >Source code ↗<small>React · FastAPI · CDK</small></a
-          ><a class="resource" href="local-deploy.md"
-            >Run locally ↗<small>Mock mode, no AWS required</small></a
-          ><a class="resource" href="aws-deploy.md"
-            >Deployment guide ↗<small>AWS configuration & operations</small></a
-          ><a class="resource" href="verification.md"
-            >Executed checks ↗<small
-              >Tests, evaluations & live evidence</small
-            ></a
+        <div class="resource-grid">
+          <a href="https://github.com/manisa504/react-agent-aws"
+            >Repository <span>React · Python · CDK ↗</span></a
+          ><a href="local-deploy.md"
+            >Run locally <span>No AWS credentials required ↗</span></a
+          ><a href="aws-deploy.md"
+            >AWS deployment
+            <span>Configuration, costs and operation ↗</span></a
+          ><a href="aws-deploy-teardown.md"
+            >Cleanup plan <span>Explicit retention and approval ↗</span></a
           >
-        </div>
-        <div class="author">
-          <p>
-            <b>Built by Manisha.</b> An end-to-end AI engineering portfolio
-            project spanning typed tool contracts, bounded agent control,
-            responsive UI, asynchronous AWS execution, evaluation and
-            deployment.
-          </p>
-          <a href="https://github.com/manisa504">GitHub profile ↗</a>
         </div>
       </section>
     </main>
-    <footer class="footer wrap">
-      <span
-        >ReAct Workbench · React is the interface. ReAct is the
-        action–observation pattern.</span
-      >
-      <div>
-        <a href="demo.html">Static demo</a
-        ><a href="aws-deploy-teardown.md">Cleanup guide</a>
-      </div>
+    <footer class="wrap">
+      <span>React = UI framework · ReAct = action–observation pattern</span
+      ><a href="assets/README.md">Asset provenance ↗</a
+      ><a href="https://github.com/manisa504">Manisha on GitHub ↗</a>
     </footer>
     <dialog id="diagram-dialog" aria-labelledby="diagram-title">
       <div class="dialog-head">
-        <b id="diagram-title">AWS architecture — deployed in Ohio</b
-        ><button class="close-dialog" type="button" id="close-diagram">
-          Close ✕
-        </button>
+        <b id="diagram-title">Architecture</b
+        ><button id="close-diagram" type="button">Close ✕</button>
       </div>
-      <img
-        src="../architecture/aws-architecture.svg"
-        alt="Full AWS architecture diagram"
-      />
+      <div class="dialog-scroll">
+        <img
+          id="dialog-image"
+          src="../architecture/aws-architecture.svg"
+          alt="Expanded architecture drawing"
+        />
+      </div>
     </dialog>
     <script src="site.js" defer></script>
   </body>

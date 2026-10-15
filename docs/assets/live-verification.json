@@ -1,0 +1,159 @@
+{
+  "observed_at": "2026-10-15T22:29:43.576Z",
+  "model": "amazon.nova-lite-v1:0",
+  "region": "us-east-2",
+  "checks": [
+    {
+      "check": "Two temporary Cognito users created with email delivery suppressed",
+      "passed": true
+    },
+    {
+      "check": "Health is public and submission requires JWT authentication",
+      "passed": true
+    },
+    {
+      "check": "Cognito SRP access-token authentication",
+      "passed": true
+    },
+    {
+      "check": "Real Bedrock run used both tools, returned 7200 and cited actual retrieved evidence",
+      "passed": true
+    },
+    {
+      "check": "Second Cognito user cannot read first user run or steps",
+      "passed": true
+    },
+    {
+      "check": "Amplify browser sign-in, API CORS, real model execution and final UI",
+      "passed": true
+    },
+    {
+      "check": "Cloud /app route refresh and persisted sign-in",
+      "passed": true
+    },
+    {
+      "check": "DynamoDB persisted actual run metadata and ordered steps",
+      "passed": true
+    }
+  ],
+  "runs": [
+    {
+      "status": "SUCCEEDED",
+      "execution_mode": "BEDROCK",
+      "steps_used": 3,
+      "max_steps": 5,
+      "token_usage": {
+        "input": 3239,
+        "output": 384
+      },
+      "termination_reason": "FINAL_ANSWER",
+      "source_ids": [
+        "AWS-SQS",
+        "AWS-EVENTBRIDGE",
+        "AWS-DLQ"
+      ],
+      "created_at": "2026-10-15T22:29:17.166700+00:00",
+      "completed_at": "2026-10-15T22:29:22.340234+00:00",
+      "tools": [
+        "knowledge_search",
+        "calculator"
+      ],
+      "events": [
+        {
+          "number": 1,
+          "action": "Execute knowledge_search",
+          "tool": "knowledge_search",
+          "source_ids": [
+            "AWS-SQS",
+            "AWS-EVENTBRIDGE",
+            "AWS-DLQ"
+          ]
+        },
+        {
+          "number": 2,
+          "action": "Execute calculator",
+          "tool": "calculator",
+          "source_ids": []
+        },
+        {
+          "number": 3,
+          "action": "Final answer validated",
+          "tool": null,
+          "source_ids": [
+            "AWS-SQS",
+            "AWS-EVENTBRIDGE",
+            "AWS-DLQ"
+          ]
+        }
+      ]
+    },
+    {
+      "status": "SUCCEEDED",
+      "execution_mode": "BEDROCK",
+      "steps_used": 5,
+      "max_steps": 5,
+      "token_usage": {
+        "input": 4970,
+        "output": 547
+      },
+      "termination_reason": "FINAL_ANSWER",
+      "source_ids": [
+        "AWS-SQS",
+        "AWS-EVENTBRIDGE"
+      ],
+      "created_at": "2026-10-15T22:29:34.322376+00:00",
+      "completed_at": "2026-10-15T22:29:38.303049+00:00",
+      "tools": [
+        "knowledge_search",
+        "knowledge_search",
+        "calculator",
+        "knowledge_search"
+      ],
+      "events": [
+        {
+          "number": 1,
+          "action": "Execute knowledge_search",
+          "tool": "knowledge_search",
+          "source_ids": [
+            "AWS-SQS",
+            "AWS-DLQ"
+          ]
+        },
+        {
+          "number": 2,
+          "action": "Execute knowledge_search",
+          "tool": "knowledge_search",
+          "source_ids": [
+            "AWS-EVENTBRIDGE"
+          ]
+        },
+        {
+          "number": 3,
+          "action": "Execute calculator",
+          "tool": "calculator",
+          "source_ids": []
+        },
+        {
+          "number": 4,
+          "action": "Execute knowledge_search",
+          "tool": "knowledge_search",
+          "source_ids": [
+            "AWS-SQS",
+            "AWS-EVENTBRIDGE",
+            "AWS-DLQ"
+          ]
+        },
+        {
+          "number": 5,
+          "action": "Final answer validated",
+          "tool": null,
+          "source_ids": [
+            "AWS-SQS",
+            "AWS-EVENTBRIDGE"
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": "These two successful runs exclude earlier failed attempts and diagnostic calls. This is not a model-quality benchmark or a billing total."
+}

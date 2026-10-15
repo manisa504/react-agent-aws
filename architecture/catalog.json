@@ -1,0 +1,65 @@
+[
+  {
+    "index": 1,
+    "slug": "aws-architecture",
+    "title": "System topology",
+    "description": "Deployed AWS services and their integration boundaries.",
+    "source": "infra/lib/workbench-stack.ts"
+  },
+  {
+    "index": 2,
+    "slug": "aws-run-lifecycle",
+    "title": "Request lifecycle",
+    "description": "From SRP sign-in to HTTP 202, concurrent polling and a cited answer.",
+    "source": "backend/app/api.py \u00b7 frontend/src/hooks/useRunPolling.ts"
+  },
+  {
+    "index": 3,
+    "slug": "execution-modes",
+    "title": "Three execution modes",
+    "description": "Static JavaScript fixtures, local Python MOCK, and real AWS execution.",
+    "source": "docs/demo.js \u00b7 scripts/dev.py \u00b7 backend/app/worker.py"
+  },
+  {
+    "index": 4,
+    "slug": "auth-isolation",
+    "title": "Authentication & isolation",
+    "description": "Token validation, trusted subject extraction and ownership checks on every read.",
+    "source": "backend/app/auth.py \u00b7 backend/app/api.py"
+  },
+  {
+    "index": 5,
+    "slug": "submission-queue",
+    "title": "Submission & asynchronous work",
+    "description": "The fast submission path, SQS handoff and conditional worker claim.",
+    "source": "backend/app/api.py \u00b7 backend/app/worker.py"
+  },
+  {
+    "index": 6,
+    "slug": "agent-control",
+    "title": "Bounded agent controller",
+    "description": "Typed tools, sequential native batches, real observations and validated completion.",
+    "source": "backend/app/agent.py \u00b7 backend/app/bedrock_client.py"
+  },
+  {
+    "index": 7,
+    "slug": "data-persistence",
+    "title": "Persistence & evidence model",
+    "description": "META ownership, ordered STEP records, strongly consistent reads and TTL.",
+    "source": "backend/app/dynamo.py \u00b7 backend/app/models.py"
+  },
+  {
+    "index": 8,
+    "slug": "failure-recovery",
+    "title": "Failures, duplicates & recovery",
+    "description": "Handled agent failures versus delivery retries, and the explicit recovery gap.",
+    "source": "backend/app/agent.py \u00b7 backend/app/worker.py"
+  },
+  {
+    "index": 9,
+    "slug": "delivery-pipeline",
+    "title": "Build, deploy & offboard",
+    "description": "CI, GitHub Pages and Amplify automation; manual CDK backend deployment.",
+    "source": ".github/workflows \u00b7 amplify.yml \u00b7 infra/bin/app.ts"
+  }
+]

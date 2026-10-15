@@ -7,6 +7,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+from generate_portfolio import render
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -26,6 +28,7 @@ class Links(HTMLParser):
 
 
 def main():
+    render()
     output = ROOT / "docs/dist"
     shutil.rmtree(output, ignore_errors=True)
     output.mkdir(parents=True)
@@ -52,7 +55,7 @@ def main():
         if source.suffix in {".css", ".js"}:
             shutil.copy2(source, output / source.name)
             shutil.copy2(source, output / "docs" / source.name)
-        elif source.suffix == ".html":
+        elif source.suffix == ".html" and source.name != "portfolio.template.html":
             original = source.read_text()
             page = original.replace("../architecture/", "architecture/")
             for name in [
@@ -69,7 +72,12 @@ def main():
                 + match[3],
                 page,
             )
-            page = page.replace('src="assets/', 'src="docs/assets/')
+            page = (
+                page.replace('src="assets/', 'src="docs/assets/')
+                .replace('href="assets/', 'href="docs/assets/')
+                .replace('data-image="assets/', 'data-image="docs/assets/')
+                .replace("../backend/", "backend/")
+            )
             (output / source.name).write_text(page)
             (output / "docs" / source.name).write_text(original)
     (output / ".nojekyll").touch()
@@ -100,19 +108,26 @@ def main():
                     f"Broken local link: {source.relative_to(output)} -> {link}"
                 )
             checked += 1
-    tree = ET.parse(ROOT / "architecture/aws-architecture.drawio")
-    for diagram in tree.findall("diagram"):
-        cells = diagram.findall(".//mxCell")
-        ids = [cell.attrib["id"] for cell in cells]
-        if len(ids) != len(set(ids)):
-            raise RuntimeError(f"Duplicate draw.io IDs in {diagram.attrib['name']}")
-        if any(cell.find("mxGeometry") is None for cell in cells if cell.get("edge") == "1"):
-            raise RuntimeError("Missing edge geometry")
+    for drawing in (ROOT / "architecture").glob("*.drawio"):
+        validate_drawing(drawing)
     for source in (ROOT / "architecture").glob("*.svg"):
         ET.parse(source)
     print(
         f"Docs ready: docs/dist; {checked} local links validated; draw.io and SVG XML parsed"
     )
+
+
+def validate_drawing(path):
+    tree = ET.parse(path)
+    for diagram in tree.findall("diagram"):
+        cells = diagram.findall(".//mxCell")
+        ids = [cell.attrib["id"] for cell in cells]
+        if len(ids) != len(set(ids)):
+            raise RuntimeError(f"Duplicate draw.io IDs in {diagram.attrib['name']}")
+        if any(
+            cell.find("mxGeometry") is None for cell in cells if cell.get("edge") == "1"
+        ):
+            raise RuntimeError("Missing edge geometry")
 
 
 if __name__ == "__main__":

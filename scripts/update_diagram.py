@@ -1,6 +1,10 @@
 """Regenerate the editable diagram. Export SVG/PNG with draw.io CLI afterward."""
 
 import xml.etree.ElementTree as ET
+import copy
+import json
+
+from architecture_views import CATALOG, append_functional_views
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -497,12 +501,36 @@ def main():
             for x, y in points:
                 ET.SubElement(arr, "mxPoint", x=str(x), y=str(y))
     append_detail_pages(mx)
+    append_functional_views(mx)
     ET.ElementTree(mx).write(
         ROOT / "architecture/aws-architecture.drawio",
         encoding="UTF-8",
         xml_declaration=True,
     )
-    print("Updated editable draw.io architecture")
+    catalog = []
+    for index, (name, slug, title, description, source) in enumerate(CATALOG):
+        page = mx.findall("diagram")[index]
+        standalone = ET.Element("mxfile", host="app.diagrams.net")
+        standalone.append(copy.deepcopy(page))
+        if slug != "aws-architecture":
+            ET.ElementTree(standalone).write(
+                ROOT / f"architecture/{slug}.drawio",
+                encoding="UTF-8",
+                xml_declaration=True,
+            )
+        catalog.append(
+            {
+                "index": index + 1,
+                "slug": slug,
+                "title": title,
+                "description": description,
+                "source": source,
+            }
+        )
+    (ROOT / "architecture/catalog.json").write_text(
+        json.dumps(catalog, indent=2) + "\n"
+    )
+    print(f"Updated master draw.io and {len(catalog)} independently editable views")
 
 
 if __name__ == "__main__":

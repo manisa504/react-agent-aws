@@ -16,7 +16,7 @@ Diagram icons use draw.io's AWS stencil library. Regenerate with `.venv/bin/pyth
 
 ## Draw.io pages and source correspondence
 
-The editable file contains three pages:
+The original three views remain available. The editable master now contains nine views; see the functional atlas below. The original views are:
 
 1. **AWS Architecture:** deployed service topology, including Cognito, the two Lambdas, SQS/DLQ, DynamoDB, in-region Nova Lite and CloudWatch.
 2. **Run lifecycle:** sign-in, JWT authorization, HTTP 202 submission, conditional claim, bounded tool loop, final validation and concurrent polling. [SVG export](aws-run-lifecycle.svg).
@@ -36,3 +36,29 @@ Draw.io v27 and later use **1-based** CLI page indexes. Regenerate and export al
 ```
 
 Export PNGs and visually inspect all pages when changing layout. Earlier draw.io versions used 0-based indexes; check the installed CLI before exporting.
+
+
+## Functional atlas (nine source-derived views)
+
+| View | Source implementation | Drawing |
+| --- | --- | --- |
+| Deployed topology | CDK constructs, IAM and integrations | [SVG](aws-architecture.svg) / [master draw.io](aws-architecture.drawio) |
+| Request lifecycle | API, worker and polling hooks | [SVG](aws-run-lifecycle.svg) / [draw.io](aws-run-lifecycle.drawio) |
+| Execution modes | Static fixtures, local dispatcher, AWS worker | [SVG](execution-modes.svg) / [draw.io](execution-modes.drawio) |
+| Authentication / owner isolation | auth.py and API owned() checks | [SVG](auth-isolation.svg) / [draw.io](auth-isolation.drawio) |
+| Submission / queue | API create() and worker handler() | [SVG](submission-queue.svg) / [draw.io](submission-queue.drawio) |
+| Agent control | agent.py and bedrock_client.py | [SVG](agent-control.svg) / [draw.io](agent-control.drawio) |
+| Data / evidence persistence | dynamo.py and models.py | [SVG](data-persistence.svg) / [draw.io](data-persistence.drawio) |
+| Failure / recovery | Worker partial batch failures and conditional claims | [SVG](failure-recovery.svg) / [draw.io](failure-recovery.drawio) |
+| Build / deploy | GitHub Actions, Amplify build, manual CDK | [SVG](delivery-pipeline.svg) / [draw.io](delivery-pipeline.drawio) |
+
+Regenerate the master, standalone sources and catalog, then export every view:
+
+```sh
+.venv/bin/python scripts/update_diagram.py
+.venv/bin/python scripts/export_diagrams.py --png
+```
+
+`export_diagrams.py` exports the standalone sources at page one to avoid carrying multipage viewport state into later exports. PNG review files stay under ignored `.build/`; SVGs and editable sources are committed. The CLI binary can be overridden with `--binary`. `catalog.json` supplies the website's visible gallery and source labels.
+
+Authentication is a sequence view; persistence is a record layout; failure/recovery distinguishes application outcomes from SQS delivery behavior. They are separate explanations of real functionality, rather than copies of the same topology. The portfolio's hero is a simplified hand-authored SVG drawing; the detailed draw.io atlas is authoritative for integration semantics.
