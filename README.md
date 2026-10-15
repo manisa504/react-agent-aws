@@ -42,13 +42,20 @@ The static playground offers success with citations, adjustable calculation, uns
 
 ## Architecture atlas — nine functional views
 
-The diagrams describe implemented code, including failure paths and deferred recovery. Each SVG has an editable draw.io counterpart. [Download the nine-page master](architecture/aws-architecture.drawio) · [Technical guide and source mapping](architecture/aws-architecture.md).
+The diagrams describe implemented code, including failure paths and deferred recovery. They are drawn in draw.io with the official AWS Architecture Icons (`mxgraph.aws4` library): AWS Cloud and Region group frames, service icons in their AWS category colours, and resource icons on every card that represents an AWS service. Each SVG has an editable draw.io counterpart. [Download the nine-page master](architecture/aws-architecture.drawio) · [Technical guide and source mapping](architecture/aws-architecture.md).
 
 ### 1. Deployed AWS topology
 
 ![Deployed AWS topology](architecture/aws-architecture.svg)
 
-Amplify serves the React application. Cognito authenticates, HTTP API validates the access JWT, and FastAPI persists and enqueues the run. SQS invokes a separate bounded worker, which calls Bedrock and safe tools, stores steps and emits operational logs. No VPC/NAT is provisioned.
+Everything runs inside one AWS account in US East (Ohio), us-east-2. Amplify Hosting serves the React application. Cognito authenticates, the API Gateway HTTP API validates the access JWT, and the FastAPI Lambda persists and enqueues the run. SQS invokes a separate bounded worker Lambda, which calls Bedrock and safe in-process tools, stores steps in DynamoDB and emits CloudWatch logs; exhausted deliveries land in the SQS DLQ. Each Lambda runs under its own least-privilege IAM role. No VPC/NAT is provisioned.
+
+Regenerate and export every view after editing the generators:
+
+```sh
+.venv/bin/python scripts/update_diagram.py
+.venv/bin/python scripts/export_diagrams.py --png   # needs the draw.io desktop app; PNGs go to .build/ for inspection
+```
 
 | Functional drawing | What it explains | Editable source |
 | --- | --- | --- |

@@ -69,6 +69,77 @@ CATALOG = [
 ]
 
 
+# Official draw.io AWS 2023+ icon set (mxgraph.aws4). "res" entries are service
+# icons on their category colour; "shape" entries are outline resource/generic icons.
+AWS_ICONS = {
+    "amplify": ("res", "#DD344C"),
+    "cognito": ("res", "#DD344C"),
+    "iam": ("res", "#DD344C", "identity_and_access_management"),
+    "api_gateway": ("res", "#E7157B"),
+    "sqs": ("res", "#E7157B"),
+    "cloudwatch": ("res", "#E7157B", "cloudwatch_2"),
+    "cloudformation": ("res", "#E7157B"),
+    "lambda": ("res", "#ED7100"),
+    "dynamodb": ("res", "#C925D1"),
+    "bedrock": ("res", "#01A88D"),
+    "lambda_function": ("shape", "#ED7100"),
+    "queue": ("shape", "#E7157B"),
+    "item": ("shape", "#C925D1"),
+    "items": ("shape", "#C925D1"),
+    "users": ("shape", "#232F3E"),
+    "client": ("shape", "#232F3E"),
+    "source_code": ("shape", "#5A6C86"),
+    "permissions": ("shape", "#DD344C"),
+    "alarm": ("shape", "#E7157B"),
+    "logs": ("shape", "#E7157B"),
+    "timer": ("shape", "#E7157B", "event_time_based"),
+    "server": ("shape", "#5A6C86", "traditional_server"),
+}
+
+
+def aws_icon_style(key, dark=False):
+    kind, color, *name = AWS_ICONS[key]
+    name = name[0] if name else key
+    if kind == "res":
+        shape = f"shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.{name};strokeColor=#ffffff;fillColor={color};"
+    else:
+        fill = "#FFFFFF" if dark else color
+        shape = f"shape=mxgraph.aws4.{name};strokeColor=none;fillColor={fill};"
+    return "sketch=0;outlineConnect=0;dashed=0;html=1;" + shape
+
+
+def add_icons(root, owner, w, h, icons, dark=False):
+    """Attach AWS icons as children of a card; return the spacing the label needs."""
+    if not icons:
+        return ""
+    size, gap = (58, 14) if h >= 170 else (54, 10)
+    if h >= 170:
+        total = len(icons) * size + (len(icons) - 1) * gap
+        left, top, extra = (w - total) / 2, 22, f"spacingTop={size + 20};"
+    else:
+        left, top, extra = 22, (h - size) / 2, f"spacingLeft={size + 34};"
+    for n, key in enumerate(icons):
+        cell = ET.SubElement(
+            root,
+            "mxCell",
+            id=f"{owner}-icon{n}",
+            value="",
+            style=aws_icon_style(key, dark),
+            vertex="1",
+            parent=owner,
+        )
+        ET.SubElement(
+            cell,
+            "mxGeometry",
+            x=str(round(left + n * (size + gap))),
+            y=str(round(top)),
+            width=str(size),
+            height=str(size),
+            attrib={"as": "geometry"},
+        )
+    return extra
+
+
 def append_functional_views(mx):
     def create(name, title, subtitle):
         page = ET.SubElement(
@@ -89,7 +160,7 @@ def append_functional_views(mx):
         ET.SubElement(root, "mxCell", id="0")
         ET.SubElement(root, "mxCell", id="1", parent="0")
 
-        def box(id, text, x, y, w=420, h=170, kind="card"):
+        def box(id, text, x, y, w=420, h=170, kind="card", icons=None):
             styles = {
                 "card": "rounded=1;fillColor=#FFFFFF;strokeColor=#CAD3E0;fontColor=#142135;spacing=22;fontSize=25;",
                 "dark": "rounded=1;fillColor=#142135;strokeColor=#142135;fontColor=#FFFFFF;spacing=22;fontSize=25;",
@@ -115,6 +186,10 @@ def append_functional_views(mx):
                 width=str(w),
                 height=str(h),
                 attrib={"as": "geometry"},
+            )
+            cell.set(
+                "style",
+                cell.get("style") + add_icons(root, id, w, h, icons, kind == "dark"),
             )
             return id
 
@@ -181,14 +256,14 @@ def append_functional_views(mx):
         "Cognito authenticates. API Gateway validates tokens. The application enforces run ownership.",
     )
     participants = [
-        ("browser", "Browser / Amplify", 140),
-        ("cognito", "Cognito / SRP", 600),
-        ("gateway", "HTTP API / JWT", 1060),
-        ("api", "FastAPI Lambda", 1520),
-        ("db", "DynamoDB", 1980),
+        ("browser", "Browser / Amplify", 140, "amplify"),
+        ("cognito", "Cognito / SRP", 600, "cognito"),
+        ("gateway", "HTTP API / JWT", 1060, "api_gateway"),
+        ("api", "FastAPI Lambda", 1520, "lambda"),
+        ("db", "DynamoDB", 1980, "dynamodb"),
     ]
-    for id, label, x in participants:
-        box(id, label, x, 270, 310, 100, "dark")
+    for id, label, x, aws in participants:
+        box(id, label, x, 270, 310, 100, "dark", [aws])
         cell = ET.SubElement(
             root,
             "mxCell",
@@ -304,8 +379,18 @@ def append_functional_views(mx):
             790,
         ),
     ]
+    node_icons = {
+        "browser": ["client"],
+        "api": ["lambda"],
+        "table": ["dynamodb"],
+        "queue": ["sqs"],
+        "worker": ["lambda"],
+        "claim": ["dynamodb"],
+        "controller": ["bedrock"],
+        "poll": ["client"],
+    }
     for id, text, x, y in nodes:
-        box(id, text, x, y, 460, 235)
+        box(id, text, x, y, 460, 235, icons=node_icons[id])
     for i, (a, b) in enumerate(
         [
             ("browser", "api"),
@@ -398,7 +483,22 @@ def append_functional_views(mx):
             730,
         ),
     ]:
-        box(id, text, x, y, 560, 235)
+        box(
+            id,
+            text,
+            x,
+            y,
+            560,
+            235,
+            icons={
+                "budget": ["timer"],
+                "model": ["bedrock"],
+                "validate": ["permissions"],
+                "tools": ["lambda_function"],
+                "observe": ["source_code"],
+                "record": ["dynamodb"],
+            }[id],
+        )
     for i, (a, b) in enumerate(
         [
             ("budget", "model"),
@@ -450,6 +550,7 @@ def append_functional_views(mx):
         360,
         430,
         230,
+        icons=["lambda"],
     )
     box(
         "worker",
@@ -458,6 +559,7 @@ def append_functional_views(mx):
         820,
         430,
         230,
+        icons=["lambda"],
     )
     box(
         "table-header",
@@ -467,6 +569,7 @@ def append_functional_views(mx):
         1490,
         95,
         "dark",
+        ["dynamodb"],
     )
     rows = [
         (
@@ -487,7 +590,16 @@ def append_functional_views(mx):
         ),
     ]
     for n, (key, value) in enumerate(rows):
-        box("key" + str(n), key, 770, 400 + n * 165, 350, 140, "dark")
+        box(
+            "key" + str(n),
+            key,
+            770,
+            400 + n * 165,
+            350,
+            140,
+            "dark",
+            [["item"], ["items"], ["items"], ["timer"]][n],
+        )
         box("value" + str(n), value, 1140, 400 + n * 165, 1120, 140)
     edge("read", "api", "key0", "Check owner")
     edge(
@@ -546,6 +658,7 @@ def append_functional_views(mx):
         950,
         460,
         230,
+        icons=["sqs"],
     )
     box(
         "exception",
@@ -554,6 +667,7 @@ def append_functional_views(mx):
         950,
         460,
         230,
+        icons=["lambda"],
     )
     box(
         "retry",
@@ -562,6 +676,7 @@ def append_functional_views(mx):
         950,
         460,
         230,
+        icons=["sqs"],
     )
     box(
         "dlq",
@@ -570,6 +685,7 @@ def append_functional_views(mx):
         950,
         460,
         230,
+        icons=["sqs"],
     )
     edge("delivery", "sqs", "exception", dashed=True)
     edge("retryflow", "exception", "retry", dashed=True)
@@ -603,9 +719,22 @@ def append_functional_views(mx):
             "Scoped IAM / restricted CORS<br>CloudWatch logs + alarms",
         ),
     ]
+    lane_icons = [
+        [["source_code"], ["permissions"], ["logs"]],
+        [["source_code"], ["amplify"], ["amplify"]],
+        [["source_code"], ["cloudformation", "lambda"], ["iam", "cloudwatch"]],
+    ]
     for index, (name, y, a, b, c) in enumerate(lanes):
         box("lane" + str(index), name, 70, y - 70, 2220, 55, "label")
         for col, text in enumerate([a, b, c]):
-            box(f"n{index}-{col}", text, 100 + col * 770, y, 650, 210)
+            box(
+                f"n{index}-{col}",
+                text,
+                100 + col * 770,
+                y,
+                650,
+                210,
+                icons=lane_icons[index][col],
+            )
         edge("e" + str(index), f"n{index}-0", f"n{index}-1")
         edge("f" + str(index), f"n{index}-1", f"n{index}-2")
