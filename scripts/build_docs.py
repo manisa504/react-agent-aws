@@ -30,6 +30,7 @@ def main():
     shutil.rmtree(output, ignore_errors=True)
     output.mkdir(parents=True)
     shutil.copytree(ROOT / "architecture", output / "architecture")
+    shutil.copy2(ROOT / "amplify-rewrites.json", output / "amplify-rewrites.json")
     for source in list(ROOT.glob("*.md")) + list((ROOT / "docs").glob("*.md")):
         dest = output / source.relative_to(ROOT)
         dest.parent.mkdir(parents=True, exist_ok=True)

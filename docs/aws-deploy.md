@@ -75,7 +75,7 @@ VITE_USER_POOL_ID=<UserPoolId>
 VITE_USER_POOL_CLIENT_ID=<UserPoolClientId>
 ```
 
-These are public configuration, not secrets. Rebuild Amplify. The deployed app preserves Amplify's `/<*>` → `/index.html` fallback with status `404-200`; existing assets are served normally. For a fresh app, configure a documented SPA fallback and verify direct `/app` navigation and refresh. See [SPA redirects](https://docs.aws.amazon.com/amplify/latest/userguide/redirect-rewrite-examples.html).
+These are public configuration, not secrets. Rebuild Amplify. The deployed app uses the extension-excluding HTTP 200 SPA rewrite in [amplify-rewrites.json](../amplify-rewrites.json), targeting `/index.html` while preserving static assets. Apply it with `aws amplify update-app --app-id ds93i2ygk81q9 --custom-rules file://amplify-rewrites.json --profile research --region us-east-2`. Verify direct `/app` navigation and refresh after every hosting deployment. See [SPA redirects](https://docs.aws.amazon.com/amplify/latest/userguide/redirect-rewrite-examples.html).
 
 In Cognito, create a demo user using a real controlled email and let Cognito deliver a temporary password. Do not put passwords in shell history, repo files, screenshots, or documentation. Sign in through the UI and complete the new-password challenge. Provision a second controlled user for ownership verification. Public self-signup is disabled.
 
