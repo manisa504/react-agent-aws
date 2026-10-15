@@ -19,6 +19,10 @@ Select a model supporting Converse client-side tool use in this region and accou
 
 Create an AWS Budget alert in the console and choose the notification recipient. Alerts are not a spending cap. Review Bedrock per-token usage, Amplify build/hosting/data transfer, API Gateway requests, Lambda duration, DynamoDB requests/storage, SQS, and CloudWatch pricing for the selected region. This project does not invent a fixed monthly estimate before model and usage are chosen.
 
+## Current account readiness
+
+Authentication to account `263429641790` succeeded, and Bedrock model/profile discovery worked in `us-east-1`. An organization service control policy explicitly denied `amplify:ListApps` and `cloudformation:DescribeStacks` for both `ReActWorkbenchStack` and `CDKToolkit`. Deployment is blocked by these account controls; no resources were provisioned. Have the account administrator review these specific denials and approve an environment for the documented architecture before continuing. Do not bypass the controls by changing roles or regions without authorization. Model listing alone does not establish invocation access.
+
 ## Git and Amplify preparation
 
 Use the supplied repository `https://github.com/manisa504/react-agent-aws`. It was empty and publicly readable when checked. The local checkout is connected to this repository as `origin`; push the implementation after GitHub authentication. Preserve its current visibility unless the owner requests a change; do not include the surrounding source zip, `.env`, `.venv`, `node_modules`, `.build`, or AWS outputs. If using GitHub CLI, install and authenticate it first with browser authorization. Otherwise create the repository through GitHub's UI and use standard Git authentication.

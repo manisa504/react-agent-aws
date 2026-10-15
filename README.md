@@ -6,7 +6,7 @@ Tool-calling assistants can repeat actions or give answers without evidence. Man
 
 **React** is the UI framework. **ReAct** is the model/tool action-and-observation pattern. Private chain-of-thought is never displayed.
 
-**Status:** implemented and verified locally in deterministic MOCK mode. AWS infrastructure is synthesized and tested; a live Bedrock run and public AWS URL remain unverified. See [verification notes](docs/verification.md).
+**Status:** implemented and verified locally in deterministic MOCK mode. AWS infrastructure is synthesized and tested. GitHub upload and AWS account authentication are verified; live deployment is blocked by organization policy denials for Amplify and CloudFormation in the selected region. A live Bedrock run and public AWS URL remain unverified. See [verification notes](docs/verification.md).
 
 ![Actual local mock workbench screenshot](docs/assets/workbench-local.png)
 

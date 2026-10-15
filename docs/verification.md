@@ -34,8 +34,8 @@ The supplied repository is public. The implementation was pushed without changin
 
 ## Cloud prerequisites still outstanding
 
-- The AWS browser authorization timed out without completing. Restart `aws login --profile research --region us-east-1`, finish browser authorization, then verify that Account is `263429641790` and inspect the authenticated Arn.
-- Verify regional Bedrock model/tool access and actual pricing; configure exact invocation ARNs.
+- AWS authentication now succeeds for account `263429641790` using profile `research` and role `AccountFullAccessRole`. In `us-east-1`, an organization service control policy explicitly denied `amplify:ListApps` and `cloudformation:DescribeStacks` for both the project stack and CDKToolkit. An administrator must approve the deployment environment/policy before cloud preparation can continue. Signing in again does not remove these policy restrictions.
+- Amazon Nova Micro/Lite/Pro appeared ACTIVE in the regional foundation-model list; system-defined Nova inference profiles were also listed. This verifies discovery only, not invocation permission or tool execution. Confirm actual model/tool access and pricing, then configure exact invocation ARNs.
 - Finish Amplify's Git authorization and supply its real origin.
 - Review the actual CDK diff/account/model/costs at the required deployment approval checkpoint, then deploy and execute authenticated live smoke/ownership checks.
 
